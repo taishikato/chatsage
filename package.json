@@ -6,13 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "genType": "npx supabase gen types typescript --project-id 'yxpetxiurawcbgseobbv' --schema public > src/types/supabase.ts"
   },
   "dependencies": {
+    "@langchain/community": "^0.2.19",
+    "@langchain/openai": "^0.2.4",
     "@radix-ui/react-slot": "^1.1.0",
+    "@supabase/supabase-js": "^2.44.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "html-entities": "^2.5.2",
+    "langchain": "^0.2.10",
     "lucide-react": "^0.408.0",
     "next": "14.2.5",
     "node-html-parser": "^6.1.13",
