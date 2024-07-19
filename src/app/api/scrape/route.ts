@@ -10,9 +10,11 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 export async function POST(req: Request): Promise<Response> {
   const supabase = createAdminClient();
 
+  const url = "https://taishikato.com/";
+
   const payload = {
     api_key: process.env.SCRAPER_API_KEY,
-    url: "https://taishikato.com/",
+    url,
     render_js: "true",
   };
   try {
@@ -44,6 +46,11 @@ export async function POST(req: Request): Promise<Response> {
     });
 
     await store.addDocuments(docs);
+
+    // save the url on Supabase
+    await supabase.from("urls").insert({
+      url,
+    });
 
     return NextResponse.json({
       success: true,
