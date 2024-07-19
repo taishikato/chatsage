@@ -10,7 +10,7 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 export async function POST(req: Request): Promise<Response> {
   const supabase = createAdminClient();
 
-  const url = "https://taishikato.com/";
+  const url = "https://www.onseninsider.com";
 
   const payload = {
     api_key: process.env.SCRAPER_API_KEY,
