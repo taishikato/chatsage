@@ -10,11 +10,9 @@
     "genType": "npx supabase gen types typescript --project-id 'yxpetxiurawcbgseobbv' --schema public > src/types/supabase.ts"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
     "@langchain/community": "^0.2.19",
     "@langchain/openai": "^0.2.4",
     "@radix-ui/react-checkbox": "^1.1.1",
-    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@supabase/supabase-js": "^2.44.4",
     "class-variance-authority": "^0.7.0",
@@ -26,12 +24,10 @@
     "node-html-parser": "^6.1.13",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.52.1",
     "redaxios": "^0.5.1",
     "sitemapper": "^3.2.9",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.8"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",

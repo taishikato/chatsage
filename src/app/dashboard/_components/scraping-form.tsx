@@ -6,16 +6,6 @@ import { ScrapingButton } from "./scraping-button";
 // import Sitemapper from "sitemapper";
 import { findSites } from "@/actions/find-sites";
 import { useFormState } from "react-dom";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { SiteList } from "./site-list";
