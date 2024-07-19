@@ -22,6 +22,7 @@ export const SiteList = ({
         name="sites"
         checked={checkedState}
         onCheckedChange={(checked) => setCheckedState(checked as boolean)}
+        value={site}
       />
       <label htmlFor="sites">{site}</label>
     </li>

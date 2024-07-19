@@ -13,7 +13,7 @@ export default async function Dashboard() {
     <main className="max-w-xl mx-auto">
       <h1>Dashboard</h1>
       <ScrapingForm />
-      <h2>Scraped sources</h2>
+      <h2 className="font-bold">Scraped sources</h2>
       {data?.map((d) => {
         return <div key={d.url}>{d.url}</div>;
       })}
