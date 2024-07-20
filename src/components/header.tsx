@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/createClientSupabaseClient";
+import { createClient } from "@/lib/supabase/client";
 import { Button } from "./ui/button";
 
 export const Header = () => {
