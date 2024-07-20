@@ -143,7 +143,7 @@ async function sendMessage() {
 
     try {
       // Make API call
-      const response = await fetch("https://api.example.com/chat", {
+      const response = await fetch("http://localhost:3000/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -156,6 +156,8 @@ async function sendMessage() {
       }
 
       const data = await response.json();
+
+      console.log({ data });
 
       // Add bot response to the chat
       addMessageToChat("bot", data.reply);
