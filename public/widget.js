@@ -153,7 +153,9 @@ async function sendMessage() {
     input.value = "";
 
     try {
-      // Make API call
+      // Create a placeholder for the bot's response
+      const botMessageElement = addMessageToChat("bot", "");
+
       const response = await fetch("http://localhost:3000/api/chat", {
         method: "POST",
         headers: {
@@ -166,10 +168,23 @@ async function sendMessage() {
         throw new Error("API request failed");
       }
 
-      const data = await response.json();
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let botResponse = "";
 
-      // Add bot response to the chat
-      addMessageToChat("bot", data.reply);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        // Decode the chunk and append it to the bot's response
+        const chunk = decoder.decode(value, { stream: true });
+        // Parse the chunk and add it to the bot's response
+        const parsedChunk = parseChunk(chunk);
+        botResponse += parsedChunk;
+
+        // Update the bot's message in the chat
+        updateBotMessage(botMessageElement, botResponse);
+      }
     } catch (error) {
       console.error("Error:", error);
       addMessageToChat(
@@ -197,7 +212,7 @@ function addMessageToChat(sender, message) {
 
   const avatarImg = document.createElement("img");
   avatarImg.src = "/placeholder.svg?height=40&width=40";
-  avatarImg.alt = sender === "user" ? "User" : "SupaChat AI";
+  avatarImg.alt = sender === "user" ? "User" : "Chatbase AI";
   avatarImg.style.width = "100%";
   avatarImg.style.height = "100%";
 
@@ -214,6 +229,28 @@ function addMessageToChat(sender, message) {
 
   chatContainer.appendChild(messageElement);
   chatContainer.scrollTop = chatContainer.scrollHeight;
+
+  return messageElement;
+}
+
+function updateBotMessage(messageElement, text) {
+  const messageDiv = messageElement.querySelector("div");
+  messageDiv.textContent = text;
+
+  const chatContainer = document.querySelector(
+    ".chat-widget > div:nth-child(2)"
+  );
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function parseChunk(chunk) {
+  // Parse the chunk, assuming it's in the format "0:"word" 0:"another""
+  const words = chunk
+    .split("0:")
+    .map((word) => word.trim().replace(/^"|"$/g, "")) // Remove quotes
+    .filter((word) => word !== ""); // Remove empty strings
+
+  return words.join(""); // Join words with spaces
 }
 
 triggerButtonElement.addEventListener("click", () => {
