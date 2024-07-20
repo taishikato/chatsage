@@ -1,6 +1,8 @@
 import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
 import { ScrapingForm } from "./_components/scraping-form";
 
+export const dynamic = "force-dynamic";
+
 export default async function Dashboard() {
   const supabase = createAdminClient();
 
