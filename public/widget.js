@@ -88,8 +88,8 @@ function createChatWidget() {
         <button class="chat-button" style="flex: 1;">How do I add data to my chatbot?</button>
       </div>
       <div style="position: relative;">
-        <input type="text" placeholder="Message..." style="width: 100%; padding: 10px; padding-right: 40px; border: 1px solid #e0e0e0; border-radius: 4px;" />
-        <button style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+        <input type="text" id="chat-input" placeholder="Message..." style="width: 100%; padding: 10px; padding-right: 40px; border: 1px solid #e0e0e0; border-radius: 4px;" />
+        <button id="send-button" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -125,7 +125,84 @@ function createChatWidget() {
   `;
   document.head.appendChild(style);
 
+  widget.querySelector("#send-button").addEventListener("click", sendMessage);
+
   return widget;
+}
+
+async function sendMessage() {
+  const input = document.querySelector("#chat-input");
+  const message = input.value.trim();
+
+  if (message) {
+    // Add user message to the chat
+    addMessageToChat("user", message);
+
+    // Clear input
+    input.value = "";
+
+    try {
+      // Make API call
+      const response = await fetch("https://api.example.com/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: message }),
+      });
+
+      if (!response.ok) {
+        throw new Error("API request failed");
+      }
+
+      const data = await response.json();
+
+      // Add bot response to the chat
+      addMessageToChat("bot", data.reply);
+    } catch (error) {
+      console.error("Error:", error);
+      addMessageToChat(
+        "bot",
+        "Sorry, I encountered an error. Please try again later."
+      );
+    }
+  }
+}
+
+function addMessageToChat(sender, message) {
+  const chatContainer = document.querySelector(
+    ".chat-widget > div:nth-child(2)"
+  );
+  const messageElement = document.createElement("div");
+  messageElement.style.display = "flex";
+  messageElement.style.marginBottom = "16px";
+
+  const avatarSpan = document.createElement("span");
+  avatarSpan.style.width = "40px";
+  avatarSpan.style.height = "40px";
+  avatarSpan.style.borderRadius = "50%";
+  avatarSpan.style.overflow = "hidden";
+  avatarSpan.style.marginRight = "8px";
+
+  const avatarImg = document.createElement("img");
+  avatarImg.src = "/placeholder.svg?height=40&width=40";
+  avatarImg.alt = sender === "user" ? "User" : "SupaChat AI";
+  avatarImg.style.width = "100%";
+  avatarImg.style.height = "100%";
+
+  avatarSpan.appendChild(avatarImg);
+
+  const messageDiv = document.createElement("div");
+  messageDiv.style.backgroundColor = sender === "user" ? "#e6f3ff" : "#f0f0f0";
+  messageDiv.style.padding = "12px";
+  messageDiv.style.borderRadius = "8px";
+  messageDiv.textContent = message;
+
+  messageElement.appendChild(avatarSpan);
+  messageElement.appendChild(messageDiv);
+
+  chatContainer.appendChild(messageElement);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 triggerButtonElement.addEventListener("click", () => {
