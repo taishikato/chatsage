@@ -125,7 +125,18 @@ function createChatWidget() {
   `;
   document.head.appendChild(style);
 
+  // Add event listener for the send button
   widget.querySelector("#send-button").addEventListener("click", sendMessage);
+
+  // Add event listener for the Enter key in the input field
+  widget
+    .querySelector("#chat-input")
+    .addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Prevent default form submission behavior
+        sendMessage();
+      }
+    });
 
   return widget;
 }
@@ -156,8 +167,6 @@ async function sendMessage() {
       }
 
       const data = await response.json();
-
-      console.log({ data });
 
       // Add bot response to the chat
       addMessageToChat("bot", data.reply);
