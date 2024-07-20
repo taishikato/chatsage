@@ -1,23 +1,14 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 import { Button } from "./ui/button";
 
 export const Header = () => {
-  const supabase = createClient();
-
-  const loginWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${location.origin}/auth/callback`,
-      },
-    });
-  };
-
   return (
     <header>
-      <Button onClick={loginWithGoogle}>Login</Button>
+      <Button asChild>
+        <Link href="/login">Login</Link>
+      </Button>
     </header>
   );
 };
