@@ -53,7 +53,33 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      match_vectors:
+        | {
+            Args: {
+              query_embedding: string
+              match_count?: number
+              filter?: Json
+            }
+            Returns: {
+              id: number
+              content: string
+              metadata: Json
+              embedding: Json
+              similarity: number
+            }[]
+          }
+        | {
+            Args: {
+              query_embedding: string
+              match_threshold: number
+              match_count: number
+            }
+            Returns: {
+              id: number
+              content: string
+              similarity: number
+            }[]
+          }
     }
     Enums: {
       [_ in never]: never
