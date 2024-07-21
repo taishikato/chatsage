@@ -14,27 +14,27 @@ export type Database = {
           created_at: string
           id: number
           name: string | null
-          user_id: number
+          user_auth_id: string
         }
         Insert: {
           created_at?: string
           id?: number
           name?: string | null
-          user_id: number
+          user_auth_id: string
         }
         Update: {
           created_at?: string
           id?: number
           name?: string | null
-          user_id?: number
+          user_auth_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "projects_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "projects_user_auth_id_fkey"
+            columns: ["user_auth_id"]
             isOneToOne: false
             referencedRelation: "users"
-            referencedColumns: ["id"]
+            referencedColumns: ["auth_id"]
           },
         ]
       }
@@ -58,22 +58,22 @@ export type Database = {
       }
       users: {
         Row: {
+          auth_id: string
           created_at: string
           email: string | null
           id: number
-          internal_id: string
         }
         Insert: {
+          auth_id?: string
           created_at?: string
           email?: string | null
           id?: number
-          internal_id?: string
         }
         Update: {
+          auth_id?: string
           created_at?: string
           email?: string | null
           id?: number
-          internal_id?: string
         }
         Relationships: []
       }
