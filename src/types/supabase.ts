@@ -9,6 +9,35 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      projects: {
+        Row: {
+          created_at: string
+          id: number
+          name: string | null
+          user_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          user_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string | null
+          user_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       urls: {
         Row: {
           created_at: string
