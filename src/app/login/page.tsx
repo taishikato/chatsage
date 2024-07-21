@@ -9,7 +9,7 @@ import { LoginForm } from "./_components/login-form";
 
 export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-[calc(100vh-56px)]">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
