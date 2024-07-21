@@ -4,10 +4,9 @@ import { Input } from "@/components/ui/input";
 import { SitemapButton } from "./sitemap-button";
 import { useFormState } from "react-dom";
 import { findSites } from "@/actions/find-sites";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { SiteList } from "./site-list";
-import { Loader } from "lucide-react";
+import { DataTable } from "./data-table";
+import { columns } from "./columns";
 
 const initialState = {
   sites: [],
@@ -35,10 +34,14 @@ export const SitemapForm = () => {
         />
         <SitemapButton />
       </form>
-      <h2 className="font-bold">Found sources</h2>
       {state.sites.length > 0 && (
         <div>
-          <Button onClick={handleSelectAll}>
+          <h2 className="font-bold">Found sources</h2>
+          <DataTable
+            columns={columns}
+            data={state.sites.map((site) => ({ url: site }))}
+          />
+          {/* <Button onClick={handleSelectAll}>
             {selectAll ? "Deselect All" : "Select All"}
           </Button>
           <form
@@ -64,7 +67,7 @@ export const SitemapForm = () => {
               {scraping && <Loader className="size-4 mr-2 animate-spin" />}
               Scrape the selected sources
             </Button>
-          </form>
+          </form> */}
         </div>
       )}
     </>
