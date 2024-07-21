@@ -27,6 +27,27 @@ export type Database = {
         }
         Relationships: []
       }
+      users: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: number
+          internal_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: number
+          internal_id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: number
+          internal_id?: string
+        }
+        Relationships: []
+      }
       vectors: {
         Row: {
           content: string | null
