@@ -16,7 +16,7 @@ const list = [
 
 export default function DataSourcesPage() {
   return (
-    <Card className="w-[600px]">
+    <Card className="max-w-3xl mx-auto">
       <form>
         <CardHeader>
           <CardTitle>Data Sources</CardTitle>

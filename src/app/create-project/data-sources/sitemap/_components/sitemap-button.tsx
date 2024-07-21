@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Loader } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
 export const SitemapButton = () => {
@@ -8,7 +9,7 @@ export const SitemapButton = () => {
 
   return (
     <Button type="submit" disabled={pending}>
-      Find sources
+      {pending && <Loader className="size-4 mr-2 animate-spin" />}Find sources
     </Button>
   );
 };

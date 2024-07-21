@@ -5,10 +5,8 @@ import Sitemapper from "sitemapper";
 export const findSites = async (prevState: any, formData: FormData) => {
   const url = formData.get("url") as string;
 
-  const target = `${url}/sitemap.xml`;
-
   const sitemapper = new Sitemapper({
-    url: target,
+    url,
     timeout: 15000,
   });
 

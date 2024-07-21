@@ -3,7 +3,7 @@ import { SubmitForm } from "./_components/submit-form";
 
 export default function CreateProjectPage() {
   return (
-    <Card className="w-[600px]">
+    <Card className="max-w-3xl mx-auto">
       <SubmitForm />
     </Card>
   );
