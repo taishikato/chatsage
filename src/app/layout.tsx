@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { createClient } from "@/lib/supabase/server";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,9 +25,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, "min-h-screen flex flex-col")}>
         <Header isLoggedIn={isLoggedIn} />
-        <main>{children}</main>
+        <main className="flex-1">{children}</main>
       </body>
     </html>
   );
