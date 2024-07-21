@@ -10,22 +10,25 @@ import Link from "next/link";
 const list = [
   {
     name: "Sitemap",
+    path: "/create-project/data-sources/sitemap",
   },
 ];
 
-export default function CreateProjectPage() {
+export default function DataSourcesPage() {
   return (
     <Card className="w-[600px]">
       <form>
         <CardHeader>
           <CardTitle>Data Sources</CardTitle>
-          <CardDescription>Used to identify your project.</CardDescription>
+          <CardDescription>
+            Where to get sources for your chatbot.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {list.map((l) => {
             return (
               <Link
-                href="#"
+                href={l.path}
                 key={l.name}
                 className="size-24 border rounded-xl flex justify-center items-center hover:border-primary transition-colors"
               >
