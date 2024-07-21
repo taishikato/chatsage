@@ -8,7 +8,6 @@ export default async function Dashboard() {
 
   const { data, error } = await supabase.from("urls").select("url");
 
-  console.log({ data });
   if (error) console.error(error.message);
 
   return (
