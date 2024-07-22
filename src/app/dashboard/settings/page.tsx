@@ -1,33 +1,29 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogoutForm } from "./_components/logout-form";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { ProjectUpdateForm } from "./_components/project-update-form";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  const { data } = await supabase.from("projects").select("name").match({
+    user_auth_id: user.id,
+  });
+
   return (
     <div className="grid gap-6">
       <Card x-chunk="dashboard-04-chunk-1">
         <CardHeader>
           <CardTitle>Project Name</CardTitle>
-          <CardDescription>
-            Used to identify your store in the marketplace.
-          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form>
-            <Input placeholder="Store Name" />
-          </form>
-        </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Save</Button>
-        </CardFooter>
+        <ProjectUpdateForm
+          projectName={data ? (data[0].name ? data[0].name : "") : ""}
+        />
       </Card>
 
       <Card x-chunk="dashboard-04-chunk-2">
