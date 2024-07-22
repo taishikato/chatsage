@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/header";
 import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
       <body className={cn(inter.className, "min-h-screen flex flex-col")}>
         <Header isLoggedIn={isLoggedIn} />
         <main className="flex-1">{children}</main>
+        <Toaster position="bottom-center" />
       </body>
     </html>
   );
