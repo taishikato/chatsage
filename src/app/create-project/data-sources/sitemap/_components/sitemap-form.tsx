@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { SitemapButton } from "./sitemap-button";
 import { useFormState } from "react-dom";
 import { findSites } from "@/actions/find-sites";
-import { useState } from "react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 
@@ -14,12 +13,6 @@ const initialState = {
 
 export const SitemapForm = () => {
   const [state, formAction] = useFormState(findSites, initialState);
-  const [selectAll, setSelectAll] = useState(true);
-  const [scraping, setScraping] = useState(false);
-
-  const handleSelectAll = () => {
-    setSelectAll(!selectAll);
-  };
 
   return (
     <>
@@ -35,39 +28,11 @@ export const SitemapForm = () => {
         <SitemapButton />
       </form>
       {state.sites.length > 0 && (
-        <div>
-          <h2 className="font-bold">Found sources</h2>
+        <div className="mt-10">
           <DataTable
             columns={columns}
             data={state.sites.map((site) => ({ url: site }))}
           />
-          {/* <Button onClick={handleSelectAll}>
-            {selectAll ? "Deselect All" : "Select All"}
-          </Button>
-          <form
-            action={async (formData) => {
-              const selectedSites = formData.getAll("sites") as string[];
-              setScraping(true);
-
-              for (const site of selectedSites) {
-                console.log(`scraping ${site}...`);
-
-                // await scrape(site);
-              }
-
-              setScraping(false);
-            }}
-          >
-            <ul>
-              {state.sites.map((s) => {
-                return <SiteList key={s} site={s} selectAll={selectAll} />;
-              })}
-            </ul>
-            <Button type="submit" disabled={scraping}>
-              {scraping && <Loader className="size-4 mr-2 animate-spin" />}
-              Scrape the selected sources
-            </Button>
-          </form> */}
         </div>
       )}
     </>
