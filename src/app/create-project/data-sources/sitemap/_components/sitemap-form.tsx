@@ -5,8 +5,9 @@ import { SitemapButton } from "./sitemap-button";
 import { useFormState } from "react-dom";
 import { findSites } from "@/actions/find-sites";
 import { DataTable } from "./data-table";
-import { columns } from "./columns";
-import { useState } from "react";
+import { statusColumns } from "./status-columns";
+import { sourceListColumns } from "./source-list-columns";
+import { useEffect, useState } from "react";
 import { scrape } from "@/actions/scrape";
 import { Button } from "@/components/ui/button";
 
@@ -17,11 +18,28 @@ const initialState = {
 export const SitemapForm = () => {
   const [scraping, setScraping] = useState(false);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [scrapingInitiated, setScrapingInitiated] = useState(false);
   const [state, formAction] = useFormState(findSites, initialState);
+  const [scrapingStatus, setScrapingStatus] = useState<
+    { url: string; status: string }[]
+  >([]);
 
   const handleSelectionChange = (newSelectedRows: string[]) => {
     setSelectedRows(newSelectedRows);
   };
+
+  useEffect(() => {
+    const cloned = [...selectedRows];
+
+    setScrapingStatus(
+      cloned.map((c) => {
+        return {
+          url: c,
+          status: "Waiting",
+        };
+      })
+    );
+  }, [selectedRows]);
 
   return (
     <>
@@ -41,32 +59,64 @@ export const SitemapForm = () => {
           <div className="mb-4 flex items-center gap-x-4">
             <div className="text-xl font-bold">Found sources</div>
             <form
-              action={async () => {
-                setScraping(true);
+              onSubmit={async (e) => {
+                e.preventDefault();
+
+                setScrapingInitiated(true);
 
                 for (const site of selectedRows) {
                   console.log(`scraping ${site}...`);
 
-                  await scrape(site);
-                }
+                  setScrapingStatus((prev) => {
+                    const cloned = [...prev];
 
-                setScraping(false);
+                    const index = cloned.findIndex((item) => item.url === site);
+                    if (index !== -1) {
+                      cloned[index].status = "Processing...";
+                    }
+
+                    return cloned;
+                  });
+
+                  await scrape(site);
+
+                  setScrapingStatus((prev) => {
+                    const cloned = [...prev];
+
+                    const index = cloned.findIndex((item) => item.url === site);
+                    if (index !== -1) {
+                      cloned[index].status = "Done";
+                    }
+
+                    return cloned;
+                  });
+                }
               }}
             >
               <Button
                 size="sm"
                 type="submit"
-                disabled={scraping || selectedRows.length === 0}
+                disabled={
+                  scraping || selectedRows.length === 0 || scrapingInitiated
+                }
               >
                 Scrape the selected sources
               </Button>
             </form>
           </div>
-          <DataTable
-            columns={columns}
-            data={state.sites.map((site) => ({ url: site }))}
-            onSelectionChange={handleSelectionChange}
-          />
+          {scrapingInitiated ? (
+            <DataTable
+              columns={statusColumns}
+              data={scrapingStatus}
+              onSelectionChange={handleSelectionChange}
+            />
+          ) : (
+            <DataTable
+              columns={sourceListColumns}
+              data={state.sites.map((site) => ({ url: site }))}
+              onSelectionChange={handleSelectionChange}
+            />
+          )}
         </div>
       )}
     </>

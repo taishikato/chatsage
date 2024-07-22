@@ -9,7 +9,7 @@ export type Payment = {
   url: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const sourceListColumns: ColumnDef<Payment>[] = [
   {
     id: "select",
     header: ({ table }) => (
