@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 
 const links = [
   {
-    name: "Log",
+    name: "Chat logs",
     path: "/dashboard",
   },
   {
-    name: "Data sources",
-    path: "/dashboard/data-sources",
+    name: "Sources",
+    path: "/dashboard/sources",
   },
   {
     name: "Settings",
