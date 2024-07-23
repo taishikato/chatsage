@@ -6,12 +6,12 @@ import { Trash } from "lucide-react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Payment = {
-  status: string;
+export type Scraping = {
+  status: string | null;
   url: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Scraping>[] = [
   {
     accessorKey: "status",
     header: "Status",

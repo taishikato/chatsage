@@ -1,30 +1,38 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { DataTable } from "@/components/ui/data-table";
-import { columns } from "./_components/columns";
+import {
+  type Source,
+  FetchedSourcesSection,
+} from "./_components/fetched-sources-section";
+import { createClient } from "@/lib/supabase/server";
 
-export default function SourcesPage() {
-  const [crawlUrl, setCrawlUrl] = useState("");
-  const [sitemapUrl, setSitemapUrl] = useState("");
+export default async function SourcesPage() {
+  const supabase = createClient();
 
-  const handleFetchLinks = () => {
-    console.log("Fetching links from:", crawlUrl);
-    // Implement link fetching logic here
-  };
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const { data: projectAndUrls } = await supabase
+    .from("projects")
+    .select("id, urls(url, status)")
+    .match({
+      user_auth_id: user!.id,
+    });
 
-  const handleLoadSitemap = () => {
-    console.log("Loading sitemap from:", sitemapUrl);
-    // Implement sitemap loading logic here
-  };
+  // const [crawlUrl, setCrawlUrl] = useState("");
+  // const [sitemapUrl, setSitemapUrl] = useState("");
 
-  const handleSelectionChange = (newSelectedRows: string[]) => {
-    // setSelectedRows(newSelectedRows);
-  };
+  // const handleFetchLinks = () => {
+  //   console.log("Fetching links from:", crawlUrl);
+  //   // Implement link fetching logic here
+  // };
+
+  // const handleLoadSitemap = () => {
+  //   console.log("Loading sitemap from:", sitemapUrl);
+  //   // Implement sitemap loading logic here
+  // };
 
   return (
     <div>
@@ -37,11 +45,11 @@ export default function SourcesPage() {
             <div className="flex items-center gap-2">
               <Input
                 type="text"
-                value={crawlUrl}
-                onChange={(e) => setCrawlUrl(e.target.value)}
+                // value={crawlUrl}
+                // onChange={(e) => setCrawlUrl(e.target.value)}
                 placeholder="https://www.example.com"
               />
-              <Button onClick={handleFetchLinks}>Fetch more links</Button>
+              <Button>Fetch more links</Button>
             </div>
             <p className="mt-2 text-sm text-muted-foreground/70">
               This will crawl all the links starting with the URL (not including
@@ -56,23 +64,20 @@ export default function SourcesPage() {
             <div className="flex items-center gap-2">
               <Input
                 type="text"
-                value={sitemapUrl}
-                onChange={(e) => setSitemapUrl(e.target.value)}
+                // value={sitemapUrl}
+                // onChange={(e) => setSitemapUrl(e.target.value)}
                 placeholder="https://www.example.com/sitemap.xml"
               />
-              <Button onClick={handleLoadSitemap}>
-                Load additional sitemap
-              </Button>
+              <Button>Load additional sitemap</Button>
             </div>
           </section>
 
           <Separator className="my-12" />
 
-          <h2 className="text-lg font-semibold mb-4">Fetched sources</h2>
-          <DataTable
-            columns={columns}
-            data={[{ status: "done", url: "example.com" }]}
-            onSelectionChange={handleSelectionChange}
+          <FetchedSourcesSection
+            sources={
+              projectAndUrls ? (projectAndUrls[0].urls as Source[]) : null
+            }
           />
         </CardContent>
       </Card>
