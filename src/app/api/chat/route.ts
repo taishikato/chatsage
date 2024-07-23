@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     tableName: "vectors",
     queryName: "match_vectors",
     filter: {
-      project_id: "dummy_project_id",
+      project_id: 1,
     },
   });
 
@@ -34,13 +34,50 @@ export async function POST(req: Request) {
     vectorStore.asRetriever()
   );
 
+  let fullResponse = "";
+
+  const modifiedHandlers = {
+    ...handlers,
+    handleLLMNewToken: (token: string) => {
+      fullResponse += token;
+      handlers.handleLLMNewToken(token);
+    },
+  };
+
+  // Call the chain and get the response
   chain.call(
     {
       question: `${prompt} ${question.message}`,
       chat_history: "",
     },
-    [handlers]
+    [modifiedHandlers]
   );
 
-  return new StreamingTextResponse(stream);
+  // Create a new ReadableStream that will be used for the response
+  const responseStream = new ReadableStream({
+    async start(controller) {
+      // Use a TextDecoder to convert the stream chunks to strings
+
+      // Read from the original stream
+      const reader = stream.getReader();
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            // When the stream is done, save the response and close the controller
+            console.log({ fullResponse });
+
+            controller.close();
+            break;
+          }
+          // Enqueue the chunk to the new stream
+          controller.enqueue(value);
+        }
+      } catch (error) {
+        controller.error(error);
+      }
+    },
+  });
+
+  return new StreamingTextResponse(responseStream);
 }
