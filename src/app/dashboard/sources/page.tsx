@@ -15,7 +15,7 @@ export default async function SourcesPage() {
   } = await supabase.auth.getUser();
   const { data: projectAndUrls } = await supabase
     .from("projects")
-    .select("id, urls(url, status)")
+    .select("id, urls(id, url, status)")
     .match({
       user_auth_id: user!.id,
     });

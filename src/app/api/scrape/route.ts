@@ -38,7 +38,8 @@ export async function POST(req: Request): Promise<Response> {
       [extractedText],
       [
         {
-          project_id: "dummy_project_id",
+          project_id: projectId,
+          url,
         },
       ]
     );

@@ -1,16 +1,23 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { DeleteButton } from "./delete-button";
+import { deleteSource } from "../actions";
+import { toast } from "sonner";
 
 export type Scraping = {
+  id: number;
   status: string | null;
   url: string;
 };
 
 export const columns: ColumnDef<Scraping>[] = [
+  {
+    accessorKey: "id",
+    header: "Id",
+    enableHiding: false,
+  },
   {
     accessorKey: "status",
     header: "Status",
@@ -39,12 +46,22 @@ export const columns: ColumnDef<Scraping>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      // const payment = row.original;
+      const id = row.getValue("id") as number;
 
       return (
-        <Button variant="ghost" size="icon">
-          <Trash className="size-4 text-red-400" />
-        </Button>
+        <form
+          action={async () => {
+            const result = await deleteSource(id);
+
+            if (result.success) {
+              toast.success("Successfully deleted.");
+            } else {
+              toast.error(`Error: ${result.message}`);
+            }
+          }}
+        >
+          <DeleteButton />
+        </form>
       );
     },
   },

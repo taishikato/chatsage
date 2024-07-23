@@ -1,7 +1,8 @@
 "use client";
 
 import {
-  ColumnDef,
+  type ColumnDef,
+  type TableState,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -20,17 +21,20 @@ import { useEffect } from "react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  state?: Partial<TableState>;
   onSelectionChange: (selectedRows: string[]) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  state,
   onSelectionChange,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
+    state,
     getCoreRowModel: getCoreRowModel(),
   });
 

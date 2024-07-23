@@ -23,10 +23,14 @@ export const FetchedSourcesSection = ({
           columns={columns}
           data={sources.map((source) => {
             return {
+              id: source.id,
               url: source.url,
               status: source.status ?? "waiting",
             };
           })}
+          state={{
+            columnVisibility: { id: false },
+          }}
           onSelectionChange={handleSelectionChange}
         />
       ) : (
