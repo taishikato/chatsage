@@ -8,11 +8,12 @@ import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 export async function POST(req: Request): Promise<Response> {
-  const supabase = createAdminClient();
+  const supabaseAdmin = createAdminClient();
 
   const jsonReq = await req.json();
 
   const url = jsonReq.url;
+  const projectId = jsonReq.projectId;
 
   const payload = {
     api_key: process.env.SCRAPER_API_KEY,
@@ -43,15 +44,16 @@ export async function POST(req: Request): Promise<Response> {
     );
 
     const store = new SupabaseVectorStore(new OpenAIEmbeddings(), {
-      client: supabase,
+      client: supabaseAdmin,
       tableName: "vectors",
     });
 
     await store.addDocuments(docs);
 
     // save the url on Supabase
-    await supabase.from("urls").insert({
+    await supabaseAdmin.from("urls").insert({
       url,
+      project_id: projectId,
     });
 
     return NextResponse.json({

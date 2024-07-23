@@ -1,12 +1,22 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/server";
 import axios from "redaxios";
 
 export const scrape = async (url: string) => {
-  await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/scrape`, { url });
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  revalidatePath("/dashboard");
+  const { data: project } = await supabase.from("projects").select("id").match({
+    user_auth_id: user!.id,
+  });
+
+  await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/scrape`, {
+    url,
+    projectId: project![0].id,
+  });
 
   return {
     success: true,

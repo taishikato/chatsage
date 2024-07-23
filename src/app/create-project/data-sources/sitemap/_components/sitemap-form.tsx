@@ -10,12 +10,16 @@ import { sourceListColumns } from "./source-list-columns";
 import { useEffect, useState } from "react";
 import { scrape } from "@/actions/scrape";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 
 const initialState = {
   sites: [],
 };
 
 export const SitemapForm = () => {
+  const supabase = createClient();
+
+  const [projectId, setProjectId] = useState<number | null>(null);
   const [scraping, setScraping] = useState(false);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [scrapingInitiated, setScrapingInitiated] = useState(false);
@@ -40,6 +44,34 @@ export const SitemapForm = () => {
       })
     );
   }, [selectedRows]);
+
+  useEffect(() => {
+    const fetchProjectId = async () => {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        const { data: projects, error: projectError } = await supabase
+          .from("projects")
+          .select("id")
+          .match({ user_auth_id: user.id });
+
+        if (projectError) {
+          console.error("Error fetching project ID:", projectError);
+        } else if (projects.length > 0) {
+          const projectId = projects[0].id;
+          console.log("Fetched project ID:", projectId);
+          setProjectId(projectId || null);
+        } else {
+          console.log("No projects found for the user.");
+        }
+      }
+    };
+
+    fetchProjectId();
+  }, [supabase]);
 
   return (
     <>
@@ -90,6 +122,16 @@ export const SitemapForm = () => {
 
                     return cloned;
                   });
+
+                  await supabase
+                    .from("urls")
+                    .update({
+                      status: "done",
+                    })
+                    .match({
+                      url: site,
+                      project_id: projectId,
+                    });
                 }
               }}
             >

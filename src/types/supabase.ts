@@ -42,19 +42,33 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          project_id: number
+          status: string | null
           url: string
         }
         Insert: {
           created_at?: string
           id?: number
+          project_id: number
+          status?: string | null
           url: string
         }
         Update: {
           created_at?: string
           id?: number
+          project_id?: number
+          status?: string | null
           url?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "urls_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {
