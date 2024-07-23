@@ -3,9 +3,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Scraping = {
   status: string | null;
   url: string;
@@ -15,6 +14,22 @@ export const columns: ColumnDef<Scraping>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      const status = row.original.status;
+
+      return (
+        <span
+          className={cn(
+            "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium",
+            status === "done" && "bg-green-100 text-green-700",
+            status === "waiting" && "bg-yellow-100 text-yellow-800",
+            status === "processing" && "bg-blue-100 text-blue-700"
+          )}
+        >
+          {status}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "url",
