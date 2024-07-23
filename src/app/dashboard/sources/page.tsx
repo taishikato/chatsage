@@ -43,13 +43,13 @@ export default function SourcesPage() {
               />
               <Button onClick={handleFetchLinks}>Fetch more links</Button>
             </div>
-            <p className="mt-2 text-sm text-gray-600">
+            <p className="mt-2 text-sm text-muted-foreground/70">
               This will crawl all the links starting with the URL (not including
               files on the website).
             </p>
           </section>
 
-          <div className="text-center text-gray-500 my-4">OR</div>
+          <div className="text-center text-muted-foreground my-4">OR</div>
 
           <section>
             <h2 className="text-lg font-semibold mb-4">Submit Sitemap</h2>
@@ -67,10 +67,11 @@ export default function SourcesPage() {
           </section>
 
           <Separator className="my-12" />
+
           <h2 className="text-lg font-semibold mb-4">Fetched sources</h2>
           <DataTable
             columns={columns}
-            data={[{ url: "example.com" }]}
+            data={[{ status: "done", url: "example.com" }]}
             onSelectionChange={handleSelectionChange}
           />
         </CardContent>
