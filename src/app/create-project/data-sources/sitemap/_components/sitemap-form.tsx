@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { SitemapButton } from "./sitemap-button";
 import { useFormState } from "react-dom";
 import { findSites } from "@/actions/find-sites";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/components/ui/data-table";
 import { statusColumns } from "./status-columns";
 import { sourceListColumns } from "./source-list-columns";
 import { useEffect, useState } from "react";
