@@ -1,12 +1,11 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
   type Source,
   FetchedSourcesSection,
 } from "./_components/fetched-sources-section";
 import { createClient } from "@/lib/supabase/server";
+import { CrawlForm } from "./_components/crawl-form";
 
 export default async function SourcesPage() {
   const supabase = createClient();
@@ -42,22 +41,14 @@ export default async function SourcesPage() {
 
           <section className="mb-8">
             <h2 className="text-lg font-semibold mb-4">Crawl</h2>
-            <div className="flex items-center gap-2">
-              <Input
-                type="text"
-                // value={crawlUrl}
-                // onChange={(e) => setCrawlUrl(e.target.value)}
-                placeholder="https://www.example.com"
-              />
-              <Button>Fetch more links</Button>
-            </div>
+            <CrawlForm />
             <p className="mt-2 text-sm text-muted-foreground/70">
               This will crawl all the links starting with the URL (not including
               files on the website).
             </p>
           </section>
 
-          <div className="text-center text-muted-foreground my-4">OR</div>
+          {/* <div className="text-center text-muted-foreground my-4">OR</div>
 
           <section>
             <h2 className="text-lg font-semibold mb-4">Submit Sitemap</h2>
@@ -70,7 +61,7 @@ export default async function SourcesPage() {
               />
               <Button>Load additional sitemap</Button>
             </div>
-          </section>
+          </section> */}
 
           <Separator className="my-12" />
 
