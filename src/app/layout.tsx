@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
-import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -18,16 +17,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let isLoggedIn = false;
-  const supabase = createClient();
-  const { data } = await supabase.auth.getUser();
-
-  if (data?.user) isLoggedIn = true;
-
   return (
     <html lang="en">
       <body className={cn(inter.className, "min-h-screen flex flex-col")}>
-        <Header isLoggedIn={isLoggedIn} />
+        <Header />
         <main className="flex-1">{children}</main>
         <Toaster position="bottom-center" />
       </body>
