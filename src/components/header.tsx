@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { logout } from "@/actions/logout";
 
 export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
@@ -11,11 +10,7 @@ export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         <h1 className="mr-auto">
           <Link href="/">SupaChat</Link>
         </h1>
-        {isLoggedIn ? (
-          <form>
-            <Button formAction={logout}>Logout</Button>
-          </form>
-        ) : (
+        {!isLoggedIn && (
           <Button asChild>
             <Link href="/login">Login</Link>
           </Button>
