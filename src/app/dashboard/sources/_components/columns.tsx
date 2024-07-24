@@ -51,6 +51,13 @@ export const columns: ColumnDef<Scraping>[] = [
       return (
         <form
           action={async () => {
+            const confirmDelete = confirm(
+              "Are you sure you want to delete this source?"
+            );
+            if (!confirmDelete) {
+              return;
+            }
+
             const result = await deleteSource(id);
 
             if (result.success) {

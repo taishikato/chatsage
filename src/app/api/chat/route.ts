@@ -77,7 +77,6 @@ export async function POST(req: Request) {
                 },
               ],
             });
-            console.log(error);
 
             controller.close();
             break;

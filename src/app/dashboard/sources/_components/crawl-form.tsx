@@ -48,6 +48,10 @@ export const CrawlForm = () => {
       action={async (formData) => {
         const url = formData.get("url") as string;
 
+        if (!url || !url.replace(/\s+/g, "")) {
+          return toast.error("URL can't be empty.");
+        }
+
         toast.success("We're adding a new source...hang tight!");
 
         await scrape(url);
@@ -63,13 +67,7 @@ export const CrawlForm = () => {
         toast.success("A new source has been added!");
       }}
     >
-      <Input
-        type="text"
-        name="url"
-        // value={crawlUrl}
-        // onChange={(e) => setCrawlUrl(e.target.value)}
-        placeholder="https://www.example.com"
-      />
+      <Input type="text" name="url" placeholder="https://www.example.com" />
       <CrawlButton />
     </form>
   );

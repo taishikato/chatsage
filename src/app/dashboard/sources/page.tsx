@@ -42,10 +42,6 @@ export default async function SourcesPage() {
           <section className="mb-8">
             <h2 className="text-lg font-semibold mb-4">Crawl</h2>
             <CrawlForm />
-            <p className="mt-2 text-sm text-muted-foreground/70">
-              This will crawl all the links starting with the URL (not including
-              files on the website).
-            </p>
           </section>
 
           {/* <div className="text-center text-muted-foreground my-4">OR</div>
