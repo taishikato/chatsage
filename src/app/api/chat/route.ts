@@ -70,7 +70,7 @@ export async function POST(req: Request) {
               messages: [
                 {
                   role: "user",
-                  message: question,
+                  message: question.message,
                 },
                 {
                   role: "assistant",
