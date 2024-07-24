@@ -26,8 +26,8 @@ function createChatWidget() {
   widget.style.position = "fixed";
   widget.style.bottom = "80px";
   widget.style.right = "20px";
-  widget.style.width = "350px";
-  widget.style.height = "500px";
+  widget.style.width = "448px";
+  widget.style.height = "600px";
   widget.style.backgroundColor = "#ffffff";
   widget.style.borderRadius = "8px";
   widget.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
