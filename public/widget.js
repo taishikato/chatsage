@@ -1,273 +1,52 @@
 console.log("Dynamic chat widget script loaded");
 
-const triggerButtonElement = document.createElement("button");
-triggerButtonElement.innerHTML =
-  '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
-triggerButtonElement.style.position = "fixed";
-triggerButtonElement.style.bottom = "20px";
-triggerButtonElement.style.right = "20px";
-triggerButtonElement.style.backgroundColor = "#000000";
-triggerButtonElement.style.width = "50px";
-triggerButtonElement.style.height = "50px";
-triggerButtonElement.style.borderRadius = "9999px";
-triggerButtonElement.style.color = "#ffffff";
-triggerButtonElement.style.border = "none";
-triggerButtonElement.style.cursor = "pointer";
-triggerButtonElement.style.display = "flex";
-triggerButtonElement.style.alignItems = "center";
-triggerButtonElement.style.justifyContent = "center";
-document.body.appendChild(triggerButtonElement);
+(function () {
+  // Create the iframe element
+  const iframe = document.createElement("iframe");
+  iframe.src = "http://localhost:3000/chatbot-iframe";
+  iframe.style.position = "fixed";
+  iframe.style.bottom = "80px";
+  iframe.style.right = "20px";
+  iframe.style.width = "300px";
+  iframe.style.height = "400px";
+  iframe.style.border = "none";
+  iframe.style.borderRadius = "10px";
+  iframe.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
+  iframe.style.zIndex = "9999";
 
-let chatWidget = null;
+  // Create a button to toggle the iframe
+  const toggleButton = document.createElement("button");
+  toggleButton.textContent = "Chat";
+  toggleButton.style.position = "fixed";
+  toggleButton.style.bottom = "20px";
+  toggleButton.style.right = "20px";
+  toggleButton.style.padding = "10px 20px";
+  toggleButton.style.backgroundColor = "#007bff";
+  toggleButton.style.color = "white";
+  toggleButton.style.border = "none";
+  toggleButton.style.borderRadius = "5px";
+  toggleButton.style.cursor = "pointer";
+  toggleButton.style.zIndex = "10000";
 
-function createChatWidget() {
-  const widget = document.createElement("div");
-  widget.className = "chat-widget";
-  widget.style.position = "fixed";
-  widget.style.bottom = "80px";
-  widget.style.right = "20px";
-  widget.style.width = "448px";
-  widget.style.height = "600px";
-  widget.style.backgroundColor = "#ffffff";
-  widget.style.borderRadius = "8px";
-  widget.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
-  widget.style.overflow = "hidden";
-  widget.style.display = "flex";
-  widget.style.flexDirection = "column";
-  widget.style.zIndex = "1000";
-  widget.style.opacity = "0";
-  widget.style.transition = "opacity 0.3s";
-
-  widget.innerHTML = `
-    <div style="flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid #e0e0e0;">
-      <div style="display: flex; align-items: center;">
-        <span style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-          <img src="https://placehold.jp/40/3d4070/ffffff/100x100.png?text=%3A)" alt="SupaChat AI" style="width: 100%; height: 100%;" />
-        </span>
-        <h2 style="font-size: 18px; font-weight: 600;">SupaChat AI</h2>
-      </div>
-      <div>
-        <button class="widget-button" style="margin-right: 8px;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-            <path d="M21 3v5h-5"></path>
-            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-            <path d="M8 16H3v5"></path>
-          </svg>
-        </button>
-        <button class="widget-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"></path>
-            <path d="M2 20h20"></path>
-            <path d="M14 12v.01"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div style="flex: 1 1 auto; padding: 16px; overflow-y: auto;">
-      <div style="display: flex; margin-bottom: 16px;">
-        <span style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-          <img src="https://placehold.jp/40/3d4070/ffffff/100x100.png?text=%3A)" alt="SupaChat AI" style="width: 100%; height: 100%;" />
-        </span>
-        <div style="background-color: #f0f0f0; padding: 12px; border-radius: 8px;">
-          <p>👋Hi! I am SupaChat AI, ask me anything about SupaChat!</p>
-        </div>
-      </div>
-      <div style="display: flex; margin-bottom: 16px;">
-        <span style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; margin-right: 8px;">
-          <img src="https://placehold.jp/40/3d4070/ffffff/100x100.png?text=%3A)" alt="SupaChat AI" style="width: 100%; height: 100%;" />
-        </span>
-        <div style="background-color: #f0f0f0; padding: 12px; border-radius: 8px;">
-          <p>By the way, you can create a chatbot like me for your website! 😲</p>
-        </div>
-      </div>
-    </div>
-    <div style="flex: 0 0 auto; padding: 16px; border-top: 1px solid #e0e0e0;">
-      <div style="display: flex; margin-bottom: 16px;">
-        <button class="chat-button" style="flex: 1; margin-right: 8px;">What is SupaChat?</button>
-        <button class="chat-button" style="flex: 1;">How do I add data to my chatbot?</button>
-      </div>
-      <div style="position: relative;">
-        <input type="text" id="chat-input" placeholder="Message..." style="width: 100%; padding: 10px; padding-right: 40px; border: 1px solid #e0e0e0; border-radius: 4px;" />
-        <button id="send-button" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
-      </div>
-    </div>
-  `;
-
-  // Add styles for buttons
-  const style = document.createElement("style");
-  style.textContent = `
-    .widget-button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 5px;
-      border-radius: 4px;
-    }
-    .widget-button:hover {
-      background-color: #f0f0f0;
-    }
-    .chat-button {
-      background-color: #ffffff;
-      border: 1px solid #e0e0e0;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .chat-button:hover {
-      background-color: #f0f0f0;
-    }
-  `;
-  document.head.appendChild(style);
-
-  // Add event listener for the send button
-  widget.querySelector("#send-button").addEventListener("click", sendMessage);
-
-  // Add event listener for the Enter key in the input field
-  widget
-    .querySelector("#chat-input")
-    .addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Prevent default form submission behavior
-        sendMessage();
-      }
-    });
-
-  return widget;
-}
-
-async function sendMessage() {
-  const input = document.querySelector("#chat-input");
-  const message = input.value.trim();
-
-  if (message) {
-    // Add user message to the chat
-    addMessageToChat("user", message);
-
-    // Clear input
-    input.value = "";
-
-    try {
-      // Create a placeholder for the bot's response
-      const botMessageElement = addMessageToChat("bot", "");
-
-      const response = await fetch("http://localhost:3000/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: message }),
-      });
-
-      if (!response.ok) {
-        throw new Error("API request failed");
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let botResponse = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        // Decode the chunk and append it to the bot's response
-        const chunk = decoder.decode(value, { stream: true });
-        // Parse the chunk and add it to the bot's response
-        const parsedChunk = parseChunk(chunk);
-        botResponse += parsedChunk;
-
-        // Update the bot's message in the chat
-        updateBotMessage(botMessageElement, botResponse);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      addMessageToChat(
-        "bot",
-        "Sorry, I encountered an error. Please try again later."
-      );
+  // Function to toggle the iframe visibility
+  function toggleIframe() {
+    if (iframe.style.display === "none") {
+      iframe.style.display = "block";
+      toggleButton.textContent = "Close";
+    } else {
+      iframe.style.display = "none";
+      toggleButton.textContent = "Chat";
+      toggleButton.style.bottom = "20px";
     }
   }
-}
 
-function addMessageToChat(sender, message) {
-  const chatContainer = document.querySelector(
-    ".chat-widget > div:nth-child(2)"
-  );
-  const messageElement = document.createElement("div");
-  messageElement.style.display = "flex";
-  messageElement.style.marginBottom = "16px";
+  // Add click event listener to the button
+  toggleButton.addEventListener("click", toggleIframe);
 
-  const avatarSpan = document.createElement("span");
-  avatarSpan.style.width = "40px";
-  avatarSpan.style.height = "40px";
-  avatarSpan.style.borderRadius = "50%";
-  avatarSpan.style.overflow = "hidden";
-  avatarSpan.style.marginRight = "8px";
+  // Initially hide the iframe
+  iframe.style.display = "none";
 
-  const avatarImg = document.createElement("img");
-  avatarImg.src = "/placeholder.svg?height=40&width=40";
-  avatarImg.alt = sender === "user" ? "User" : "Chatbase AI";
-  avatarImg.style.width = "100%";
-  avatarImg.style.height = "100%";
-
-  avatarSpan.appendChild(avatarImg);
-
-  const messageDiv = document.createElement("div");
-  messageDiv.style.backgroundColor = sender === "user" ? "#e6f3ff" : "#f0f0f0";
-  messageDiv.style.padding = "12px";
-  messageDiv.style.borderRadius = "8px";
-  messageDiv.textContent = message;
-
-  messageElement.appendChild(avatarSpan);
-  messageElement.appendChild(messageDiv);
-
-  chatContainer.appendChild(messageElement);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-
-  return messageElement;
-}
-
-function updateBotMessage(messageElement, text) {
-  const messageDiv = messageElement.querySelector("div");
-  messageDiv.textContent = text;
-
-  const chatContainer = document.querySelector(
-    ".chat-widget > div:nth-child(2)"
-  );
-  chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-function parseChunk(chunk) {
-  // Parse the chunk, assuming it's in the format "0:"word" 0:"another""
-  const words = chunk
-    .split("0:")
-    .map((word) => word.trim().replace(/^"|"$/g, "")) // Remove quotes
-    .filter((word) => word !== ""); // Remove empty strings
-
-  return words.join(""); // Join words with spaces
-}
-
-triggerButtonElement.addEventListener("click", () => {
-  if (chatWidget) {
-    chatWidget.style.opacity = "0";
-    setTimeout(() => {
-      if (chatWidget) {
-        // Ensure chatWidget is not null
-        chatWidget.remove();
-        chatWidget = null;
-      }
-    }, 300);
-  } else {
-    chatWidget = createChatWidget();
-    document.body.appendChild(chatWidget);
-    setTimeout(() => {
-      chatWidget.style.opacity = "1";
-    }, 0);
-  }
-});
+  // Append the iframe and button to the body
+  document.body.appendChild(iframe);
+  document.body.appendChild(toggleButton);
+})();
