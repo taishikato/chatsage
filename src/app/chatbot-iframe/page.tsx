@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Send } from "lucide-react";
+import { ChatForm } from "./_components/chat-form";
 
 export default function ChatbotIframePage() {
   return (
@@ -19,16 +17,7 @@ export default function ChatbotIframePage() {
         </div>
       </div>
 
-      <form className="border-t py-2 flex items-center">
-        <Textarea
-          placeholder="Your Message"
-          className="resize-none items-center min-h-[40px] border-none focus-visible:outline-none focus-visible:ring-0"
-          rows={1}
-        />
-        <Button size="icon" variant="ghost" type="submit" className="mr-2">
-          <Send className="size-4" />
-        </Button>
-      </form>
+      <ChatForm />
 
       <footer className="h-10 bg-muted/60 flex items-center justify-center text-xs text-muted-foreground">
         Supachat
