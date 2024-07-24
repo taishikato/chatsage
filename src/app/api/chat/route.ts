@@ -66,6 +66,7 @@ export async function POST(req: Request) {
           if (done) {
             // When the stream is done, save the response and close the controller
             const { error } = await supabase.from("chat_logs").insert({
+              project_id: 1,
               messages: [
                 {
                   role: "user",

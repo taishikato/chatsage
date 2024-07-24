@@ -14,18 +14,29 @@ export type Database = {
           created_at: string
           id: number
           messages: Json
+          project_id: number | null
         }
         Insert: {
           created_at?: string
           id?: number
           messages: Json
+          project_id?: number | null
         }
         Update: {
           created_at?: string
           id?: number
           messages?: Json
+          project_id?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "chat_logs_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       projects: {
         Row: {
