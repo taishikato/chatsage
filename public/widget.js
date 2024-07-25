@@ -13,7 +13,6 @@
 
   // Create the iframe element
   const iframe = document.createElement("iframe");
-  iframe.src = `http://localhost:3000/chatbot-embedding/${chatbotId}`;
   iframe.style.position = "fixed";
   iframe.style.bottom = "80px";
   iframe.style.right = "20px";
@@ -49,9 +48,15 @@
   </svg>
   `;
 
+  let iframeLoaded = false;
+
   // Function to toggle the iframe visibility
   function toggleIframe() {
     if (iframe.style.display === "none") {
+      if (!iframeLoaded) {
+        iframe.src = `http://localhost:3000/chatbot-embedding/${chatbotId}`;
+        iframeLoaded = true;
+      }
       iframe.style.display = "block";
       toggleButton.innerHTML = `<svg width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M17 9L9 1L1 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
