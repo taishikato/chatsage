@@ -40,6 +40,19 @@
   toggleButton.style.justifyContent = "center";
   toggleButton.style.alignItems = "center";
 
+  // Add hover effect
+  toggleButton.addEventListener("mouseenter", () => {
+    toggleButton.style.transform = "scale(1.1)";
+    toggleButton.style.transitionProperty = "transform";
+    toggleButton.style.transitionDuration = "150ms";
+    toggleButton.style.transitionTimingFunction =
+      "cubic-bezier(0.4, 0, 0.2, 1)";
+  });
+
+  toggleButton.addEventListener("mouseleave", () => {
+    toggleButton.style.transform = "scale(1)"; // Return to original size
+  });
+
   // Set the SVG as the button content
   toggleButton.innerHTML = `
   <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
