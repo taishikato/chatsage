@@ -77,7 +77,7 @@ export function PromptForm({
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <div className="absolute top-[8px] right-4">
+        <div className="absolute top-[12px] right-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
