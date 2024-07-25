@@ -84,7 +84,10 @@ export const ChatLogSection = () => {
       <div className="text-sm">
         {chatLogs.map((log) => {
           return (
-            <div className="space-y-3 p-4 rounded-xl cursor-pointer hover:bg-secondary">
+            <div
+              key={log.id}
+              className="space-y-3 p-4 rounded-xl cursor-pointer hover:bg-secondary"
+            >
               <div className="text-secondary-foreground/50 flex items-center justify-between">
                 <span>
                   {Array.isArray(log.messages) &&
