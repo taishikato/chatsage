@@ -8,11 +8,11 @@ import { useActions, useUIState } from "ai/rsc";
 import { UserMessage } from "./stocks/message";
 import { type AI } from "../lib/chat/actions";
 import { Button } from "@/components/ui/button";
-import { IconArrowElbow, IconPlus } from "./ui/icons";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { useEnterSubmit } from "../lib/hooks/use-enter-submit";
 import { nanoid } from "nanoid";
-import { useRouter } from "next/navigation";
+
+import { Send } from "lucide-react";
 
 export function PromptForm({
   input,
@@ -21,7 +21,6 @@ export function PromptForm({
   input: string;
   setInput: (value: string) => void;
 }) {
-  const router = useRouter();
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const { submitUserMessage } = useActions();
@@ -62,23 +61,7 @@ export function PromptForm({
         setMessages((currentMessages) => [...currentMessages, responseMessage]);
       }}
     >
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-12">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute left-0 top-[14px] size-8 rounded-full bg-background p-0 sm:left-4"
-              onClick={() => {
-                router.push("/new");
-              }}
-            >
-              <IconPlus />
-              <span className="sr-only">New Chat</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>New Chat</TooltipContent>
-        </Tooltip>
+      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background">
         <Textarea
           ref={inputRef}
           tabIndex={0}
@@ -94,11 +77,16 @@ export function PromptForm({
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <div className="absolute right-0 top-[13px] sm:right-4">
+        <div className="absolute top-[8px] right-4">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button type="submit" size="icon" disabled={input === ""}>
-                <IconArrowElbow />
+              <Button
+                type="submit"
+                size="icon"
+                disabled={input === ""}
+                variant="outline"
+              >
+                <Send className="size-5" />
                 <span className="sr-only">Send message</span>
               </Button>
             </TooltipTrigger>

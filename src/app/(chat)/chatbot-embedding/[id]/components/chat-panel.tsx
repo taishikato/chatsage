@@ -96,9 +96,9 @@ export function ChatPanel({
             ))}
         </div> */}
 
-        <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg">
+        <div className="border-t bg-background pt-2 shadow-lg">
           <PromptForm input={input} setInput={setInput} />
-          <FooterText className="h-10 flex items-center justify-center text-xs text-muted-foreground" />
+          <FooterText className="h-10 flex items-center justify-center text-xs bg-muted/70" />
         </div>
       </div>
     </div>
