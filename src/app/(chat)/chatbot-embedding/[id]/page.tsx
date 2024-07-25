@@ -23,7 +23,7 @@ export default async function IndexPage({
   const chatBotInternalId = params.id;
 
   const { data: chatBotData, error } = await supbabase
-    .from("projects")
+    .from("chatbots")
     .select("name")
     .match({ internal_id: chatBotInternalId })
     .single();

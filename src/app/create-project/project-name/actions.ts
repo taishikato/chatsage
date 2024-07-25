@@ -13,7 +13,7 @@ export const saveProjectName = async (formData: FormData) => {
 
   if (!user) return;
 
-  await supabase.from("projects").insert({
+  await supabase.from("chatbots").insert({
     name,
     user_auth_id: user.id,
   });

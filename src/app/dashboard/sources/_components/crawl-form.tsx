@@ -23,7 +23,7 @@ export const CrawlForm = () => {
 
       if (user) {
         const { data: projects, error: projectError } = await supabase
-          .from("projects")
+          .from("chatbots")
           .select("id")
           .match({ user_auth_id: user.id });
 

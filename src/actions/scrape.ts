@@ -9,7 +9,7 @@ export const scrape = async (url: string) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: project } = await supabase.from("projects").select("id").match({
+  const { data: project } = await supabase.from("chatbots").select("id").match({
     user_auth_id: user!.id,
   });
 

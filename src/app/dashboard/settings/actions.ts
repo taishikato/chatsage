@@ -18,7 +18,7 @@ export const updateProjectname = async (projectName: string) => {
   }
 
   const { error } = await supabase
-    .from("projects")
+    .from("chatbots")
     .update({ name: projectName })
     .match({ user_auth_id: user.id });
 

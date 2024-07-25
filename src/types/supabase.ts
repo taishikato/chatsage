@@ -33,12 +33,12 @@ export type Database = {
             foreignKeyName: "chat_logs_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
-            referencedRelation: "projects"
+            referencedRelation: "chatbots"
             referencedColumns: ["id"]
           },
         ]
       }
-      projects: {
+      chatbots: {
         Row: {
           created_at: string
           id: number
@@ -97,7 +97,7 @@ export type Database = {
             foreignKeyName: "urls_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
-            referencedRelation: "projects"
+            referencedRelation: "chatbots"
             referencedColumns: ["id"]
           },
         ]

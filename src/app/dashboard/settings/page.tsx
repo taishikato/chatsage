@@ -11,7 +11,7 @@ export default async function SettingsPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data } = await supabase.from("projects").select("name").match({
+  const { data } = await supabase.from("chatbots").select("name").match({
     user_auth_id: user.id,
   });
 

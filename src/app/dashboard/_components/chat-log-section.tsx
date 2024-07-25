@@ -34,7 +34,7 @@ export const ChatLogSection = () => {
 
         // Get the project ID for the logged-in user
         const { data: projectData, error: projectError } = await supabase
-          .from("projects")
+          .from("chatbots")
           .select("id")
           .eq("user_auth_id", user!.id)
           .single();
