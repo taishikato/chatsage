@@ -18,7 +18,11 @@ export default async function Home() {
           <Link href="/dashboard">dashboard</Link>
         </header>
         <h1>SupaChat</h1>
-        <Script async defer src="/widget.js" />
+        <Script
+          async
+          defer
+          src="/widget.js?chatbotId=58312165-6173-413b-8b41-3ef8e5047880"
+        />
       </main>
     </>
   );

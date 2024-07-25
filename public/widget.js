@@ -1,7 +1,19 @@
 (function () {
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(document.currentScript.src);
+    return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
+  // Get the chatbotId from the script src
+  const chatbotId = getUrlParameter("chatbotId");
+
   // Create the iframe element
   const iframe = document.createElement("iframe");
-  iframe.src = "http://localhost:3000/chatbot-iframe";
+  iframe.src = `http://localhost:3000/chatbot-embedding/${chatbotId}`;
   iframe.style.position = "fixed";
   iframe.style.bottom = "80px";
   iframe.style.right = "20px";
