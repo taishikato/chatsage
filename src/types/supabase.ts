@@ -42,18 +42,21 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          internal_id: string
           name: string | null
           user_auth_id: string
         }
         Insert: {
           created_at?: string
           id?: number
+          internal_id?: string
           name?: string | null
           user_auth_id: string
         }
         Update: {
           created_at?: string
           id?: number
+          internal_id?: string
           name?: string | null
           user_auth_id?: string
         }
