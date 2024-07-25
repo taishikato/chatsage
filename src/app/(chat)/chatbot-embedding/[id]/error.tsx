@@ -16,7 +16,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="w-full h-ful flex flex-col items-center justify-center space-y-3">
+    <main className="w-full h-dvh flex flex-col items-center justify-center space-y-3">
       <h2 className="text-xl font-semibold text-secondary-foreground">
         Something went wrong!
       </h2>
