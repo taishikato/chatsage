@@ -8,7 +8,7 @@ import { useLocalStorage } from "../lib/hooks/use-local-storage";
 import { useEffect, useState } from "react";
 import { useUIState, useAIState } from "ai/rsc";
 import { Message } from "@/lib/types";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useScrollAnchor } from "../lib/hooks/use-scroll-anchor";
 import { toast } from "sonner";
 
@@ -20,7 +20,7 @@ export interface ChatProps extends React.ComponentProps<"div"> {
 
 export function Chat({ id, className, missingKeys }: ChatProps) {
   const router = useRouter();
-  const path = usePathname();
+  // const path = usePathname();
   const [input, setInput] = useState("");
   const [messages] = useUIState();
   const [aiState] = useAIState();
