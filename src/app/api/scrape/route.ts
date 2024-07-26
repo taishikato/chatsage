@@ -38,7 +38,7 @@ export async function POST(req: Request): Promise<Response> {
       [extractedText],
       [
         {
-          project_id: projectId,
+          chatbot_id: projectId,
           url,
         },
       ]

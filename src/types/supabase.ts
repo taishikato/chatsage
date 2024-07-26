@@ -11,27 +11,27 @@ export type Database = {
     Tables: {
       chat_logs: {
         Row: {
+          chatbot_id: number | null
           created_at: string
           id: number
           messages: Json
-          project_id: number | null
         }
         Insert: {
+          chatbot_id?: number | null
           created_at?: string
           id?: number
           messages: Json
-          project_id?: number | null
         }
         Update: {
+          chatbot_id?: number | null
           created_at?: string
           id?: number
           messages?: Json
-          project_id?: number | null
         }
         Relationships: [
           {
-            foreignKeyName: "chat_logs_project_id_fkey"
-            columns: ["project_id"]
+            foreignKeyName: "chat_logs_chatbot_id_fkey"
+            columns: ["chatbot_id"]
             isOneToOne: false
             referencedRelation: "chatbots"
             referencedColumns: ["id"]

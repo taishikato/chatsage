@@ -49,7 +49,7 @@ export const ChatLogSection = () => {
         const { data, error } = await supabase
           .from("chat_logs")
           .select("*")
-          .eq("project_id", projectData.id)
+          .match({ chatbot_id: projectData.id })
           .order("created_at", { ascending: false });
 
         if (error) {

@@ -43,9 +43,10 @@ const getChat = async (chatbotId: string, conversationId: string) => {
   const aiState = getMutableAIState<typeof AI>();
 
   const { data } = await supabaeAdmin.from("chat_logs").select("*").match({
-    project_id: chatbotId,
+    chatbot_id: chatbotId,
   });
 
+  // @ts-ignore
   console.log(data[0].messages);
 
   aiState.update({
@@ -54,6 +55,7 @@ const getChat = async (chatbotId: string, conversationId: string) => {
     messages: [...data[0].messages, { id: nanoid() }],
   });
 
+  // @ts-ignore
   return data[0].messages;
 };
 
@@ -131,7 +133,7 @@ const submitUserMessage = async (content: string) => {
         });
 
         const { error } = await supabaeAdmin.from("chat_logs").insert({
-          project_id: 1,
+          chatbot_id: 1,
           messages: [
             {
               role: "user",
