@@ -42,6 +42,8 @@ async function submitUserMessage(content: string) {
 
   const aiState = getMutableAIState<typeof AI>();
 
+  const userMessage = content;
+
   // Fetch relevant context
   const relevantContext = await getRelevantContext(content);
 
@@ -88,13 +90,15 @@ async function submitUserMessage(content: string) {
         name: message.name,
       })),
     ],
-    text: ({ content, done, delta }) => {
+    text: async ({ content, done, delta }) => {
       if (!textStream) {
         textStream = createStreamableValue("");
         textNode = <BotMessage content={textStream.value} />;
       }
 
       if (done) {
+        console.log({ content });
+
         textStream.done();
         aiState.done({
           ...aiState.get(),
@@ -104,6 +108,20 @@ async function submitUserMessage(content: string) {
               id: nanoid(),
               role: "assistant",
               content,
+            },
+          ],
+        });
+
+        const { error } = await supabaeAdmin.from("chat_logs").insert({
+          project_id: 1,
+          messages: [
+            {
+              role: "user",
+              message: userMessage,
+            },
+            {
+              role: "assistant",
+              message: content,
             },
           ],
         });
