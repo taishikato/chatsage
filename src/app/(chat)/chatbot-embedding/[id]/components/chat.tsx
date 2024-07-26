@@ -30,7 +30,7 @@ export function Chat({ id, className, missingKeys }: ChatProps) {
   const { value: conversationId } = useLocalStorage();
 
   const [loadingInitialChatHistory, setLoadingInitialChatHistory] =
-    useState(true);
+    useState(false);
 
   useEffect(() => {
     const messagesLength = aiState.messages?.length;
