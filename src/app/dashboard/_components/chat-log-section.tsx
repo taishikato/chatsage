@@ -45,7 +45,7 @@ export const ChatLogSection = () => {
           .from("chat_logs")
           .select("*")
           .match({ chatbot_id: projectData.id })
-          .order("created_at", { ascending: false });
+          .order("created_at", { ascending: true });
 
         if (error) {
           console.error("Error fetching chat logs:", error);
