@@ -51,7 +51,7 @@ const getChat = async (chatbotId: string, conversationId: string) => {
   aiState.update({
     ...aiState.get(),
     // @ts-ignore
-    messages: data[0].messages,
+    messages: [...data[0].messages, { id: nanoid() }],
   });
 
   return data[0].messages;
