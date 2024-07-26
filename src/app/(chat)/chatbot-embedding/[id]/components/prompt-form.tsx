@@ -1,11 +1,12 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useRef } from "react";
+
 import Textarea from "react-textarea-autosize";
 
 import { useActions, useUIState } from "ai/rsc";
 
-import { UserMessage } from "./stocks/message";
+import { BotMessage, UserMessage } from "./stocks/message";
 import { type AI } from "../lib/chat/actions";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -22,14 +23,39 @@ export function PromptForm({
   setInput: (value: string) => void;
 }) {
   const { formRef, onKeyDown } = useEnterSubmit();
-  const inputRef = React.useRef<HTMLTextAreaElement>(null);
-  const { submitUserMessage } = useActions();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { getChat, submitUserMessage } = useActions();
   const [_, setMessages] = useUIState<typeof AI>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
+
+    const fetchChat = async () => {
+      try {
+        const initialChat = await getChat(1); // Assuming default values, adjust as needed
+
+        initialChat.forEach((chat: any) => {
+          setMessages((currentMessages) => [
+            ...currentMessages,
+            {
+              id: nanoid(),
+              display:
+                chat.role === "user" ? (
+                  <UserMessage>{chat.message}</UserMessage>
+                ) : (
+                  <BotMessage content={chat.message} />
+                ),
+            },
+          ]);
+        });
+      } catch (error) {
+        console.error("Error fetching chat:", error);
+      }
+    };
+
+    fetchChat();
   }, []);
 
   return (
@@ -58,6 +84,9 @@ export function PromptForm({
 
         // Submit and get response message
         const responseMessage = await submitUserMessage(value);
+
+        console.log({ responseMessage });
+
         setMessages((currentMessages) => [...currentMessages, responseMessage]);
       }}
     >

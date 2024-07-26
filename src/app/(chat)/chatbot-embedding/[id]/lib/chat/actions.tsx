@@ -37,7 +37,27 @@ async function getRelevantContext(query: string) {
   return results.map((doc) => doc.pageContent).join("\n\n");
 }
 
-async function submitUserMessage(content: string) {
+const getChat = async (chatbotId: string, conversationId: string) => {
+  "use server";
+
+  const aiState = getMutableAIState<typeof AI>();
+
+  const { data } = await supabaeAdmin.from("chat_logs").select("*").match({
+    project_id: chatbotId,
+  });
+
+  console.log(data[0].messages);
+
+  aiState.update({
+    ...aiState.get(),
+    // @ts-ignore
+    messages: data[0].messages,
+  });
+
+  return data[0].messages;
+};
+
+const submitUserMessage = async (content: string) => {
   "use server";
 
   const aiState = getMutableAIState<typeof AI>();
@@ -97,8 +117,6 @@ async function submitUserMessage(content: string) {
       }
 
       if (done) {
-        console.log({ content });
-
         textStream.done();
         aiState.done({
           ...aiState.get(),
@@ -137,7 +155,7 @@ async function submitUserMessage(content: string) {
     id: nanoid(),
     display: result.value,
   };
-}
+};
 
 export type AIState = {
   chatId: string;
@@ -151,6 +169,7 @@ export type UIState = {
 
 export const AI = createAI<AIState, UIState>({
   actions: {
+    getChat,
     submitUserMessage,
   },
   initialUIState: [],
