@@ -44,22 +44,19 @@ const getChat = async (chatbotId: string, conversationId: string) => {
 
   const { data } = await supabaeAdmin.from("chat_logs").select("*").match({
     chatbot_id: chatbotId,
+    conversation_id: conversationId,
   });
-
-  // @ts-ignore
-  console.log(data[0].messages);
 
   aiState.update({
     ...aiState.get(),
     // @ts-ignore
-    messages: [...data[0].messages, { id: nanoid() }],
+    messages: data,
   });
 
-  // @ts-ignore
-  return data[0].messages;
+  return data;
 };
 
-const submitUserMessage = async (content: string) => {
+const submitUserMessage = async (content: string, conversationId: string) => {
   "use server";
 
   const aiState = getMutableAIState<typeof AI>();
@@ -132,19 +129,29 @@ const submitUserMessage = async (content: string) => {
           ],
         });
 
-        const { error } = await supabaeAdmin.from("chat_logs").insert({
-          chatbot_id: 1,
-          messages: [
-            {
-              role: "user",
-              message: userMessage,
-            },
-            {
-              role: "assistant",
-              message: content,
-            },
-          ],
-        });
+        const messages = [
+          {
+            role: "user",
+            message: userMessage,
+            chatbotId: 1,
+            conversationId,
+          },
+          {
+            role: "assistant",
+            message: content,
+            chatbotId: 1,
+            conversationId,
+          },
+        ];
+
+        for (const message of messages) {
+          const { error } = await supabaeAdmin.from("chat_logs").insert({
+            role: message.role,
+            message: message.message,
+            chatbot_id: message.chatbotId,
+            conversation_id: message.conversationId,
+          });
+        }
       } else {
         textStream.update(delta);
       }

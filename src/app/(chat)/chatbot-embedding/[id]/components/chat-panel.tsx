@@ -15,6 +15,7 @@ export interface ChatPanelProps {
   setInput: (value: string) => void;
   isAtBottom: boolean;
   scrollToBottom: () => void;
+  conversationId: string;
 }
 
 export function ChatPanel({
@@ -24,6 +25,7 @@ export function ChatPanel({
   setInput,
   isAtBottom,
   scrollToBottom,
+  conversationId,
 }: ChatPanelProps) {
   // const [aiState] = useAIState();
   // const [messages, setMessages] = useUIState<typeof AI>();
@@ -97,7 +99,7 @@ export function ChatPanel({
         </div> */}
 
         <div className="border-t bg-background shadow-lg">
-          <PromptForm input={input} setInput={setInput} />
+          <PromptForm input={input} setInput={setInput} conversationId={conversationId} />
           <FooterText className="h-10 flex items-center justify-center text-xs bg-muted/70" />
         </div>
       </div>

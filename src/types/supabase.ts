@@ -12,21 +12,30 @@ export type Database = {
       chat_logs: {
         Row: {
           chatbot_id: number | null
+          conversation_id: string
           created_at: string
           id: number
-          messages: Json
+          internal_id: string
+          message: string | null
+          role: string | null
         }
         Insert: {
           chatbot_id?: number | null
+          conversation_id: string
           created_at?: string
           id?: number
-          messages: Json
+          internal_id?: string
+          message?: string | null
+          role?: string | null
         }
         Update: {
           chatbot_id?: number | null
+          conversation_id?: string
           created_at?: string
           id?: number
-          messages?: Json
+          internal_id?: string
+          message?: string | null
+          role?: string | null
         }
         Relationships: [
           {

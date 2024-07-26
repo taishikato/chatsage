@@ -18,9 +18,11 @@ import { Send } from "lucide-react";
 export function PromptForm({
   input,
   setInput,
+  conversationId,
 }: {
   input: string;
   setInput: (value: string) => void;
+  conversationId: string;
 }) {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -58,9 +60,7 @@ export function PromptForm({
         ]);
 
         // Submit and get response message
-        const responseMessage = await submitUserMessage(value);
-
-        console.log({ responseMessage });
+        const responseMessage = await submitUserMessage(value, conversationId);
 
         setMessages((currentMessages) => [...currentMessages, responseMessage]);
       }}

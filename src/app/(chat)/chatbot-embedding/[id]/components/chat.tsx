@@ -72,11 +72,9 @@ export function Chat({ id, chatbotId, className, missingKeys }: ChatProps) {
       setLoadingInitialChatHistory(true);
 
       try {
-        const initialChat = await getChat(1);
+        const initialChat = await getChat(1, conversationId);
 
         if (!initialChat) return;
-
-        console.log({ initialChat });
 
         const messagesNode = initialChat.map((chat: any) => {
           return {
@@ -129,6 +127,7 @@ export function Chat({ id, chatbotId, className, missingKeys }: ChatProps) {
             setInput={setInput}
             isAtBottom={isAtBottom}
             scrollToBottom={scrollToBottom}
+            conversationId={conversationId}
           />
         </>
       )}
