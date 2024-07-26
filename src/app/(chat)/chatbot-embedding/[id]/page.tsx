@@ -35,7 +35,7 @@ export default async function IndexPage({
       <Header chatBotName={chatBotData.name} />
       <Providers
         attribute="class"
-        defaultTheme="system"
+        defaultTheme="light"
         enableSystem
         disableTransitionOnChange
       >
