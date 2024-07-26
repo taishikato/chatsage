@@ -43,6 +43,7 @@ export type Database = {
           created_at: string
           id: number
           internal_id: string
+          is_public: boolean
           name: string | null
           user_auth_id: string
         }
@@ -50,6 +51,7 @@ export type Database = {
           created_at?: string
           id?: number
           internal_id?: string
+          is_public?: boolean
           name?: string | null
           user_auth_id: string
         }
@@ -57,6 +59,7 @@ export type Database = {
           created_at?: string
           id?: number
           internal_id?: string
+          is_public?: boolean
           name?: string | null
           user_auth_id?: string
         }

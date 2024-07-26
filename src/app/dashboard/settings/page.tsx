@@ -19,7 +19,7 @@ export default async function SettingsPage() {
     <div className="grid gap-6">
       <Card x-chunk="dashboard-04-chunk-1">
         <CardHeader>
-          <CardTitle>Project Name</CardTitle>
+          <CardTitle>Chatbot name</CardTitle>
         </CardHeader>
         <ProjectUpdateForm
           projectName={data ? (data[0].name ? data[0].name : "") : ""}
