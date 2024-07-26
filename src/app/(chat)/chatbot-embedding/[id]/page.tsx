@@ -30,7 +30,9 @@ export default async function IndexPage({
     .match({ internal_id: chatBotInternalId })
     .single();
 
-  if (error || !chatBotData) throw new Error(error.message ?? "No data found");
+  console.log({ chatBotInternalId, chatBotData });
+
+  // if (error || !chatBotData) throw new Error(error.message ?? "No data found");
 
   return (
     <>
@@ -41,7 +43,7 @@ export default async function IndexPage({
         disableTransitionOnChange
       >
         <LocalStorageProvider id={id} chatbotId={chatBotInternalId}>
-          <Header chatBotName={chatBotData.name} />
+          <Header chatBotName={chatBotData?.name ?? "no name"} />
           <ClientWrapper>
             <div className="relative flex h-[calc(100vh_-_theme(spacing.16))] overflow-hidden">
               <AI initialAIState={{ chatId: id, messages: [] }}>
