@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     tableName: "vectors",
     queryName: "match_vectors",
     filter: {
-      project_id: 1,
+      chatbot_id: 1,
     },
   });
 
