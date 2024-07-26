@@ -4,7 +4,7 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
-import { updateProjectname } from "../actions";
+import { updateChatbotName } from "../actions";
 import { ProjectUpdateButton } from "./project-update-button";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +22,7 @@ export const ProjectUpdateForm = ({ projectName }: { projectName: string }) => {
           return toast.error("Project name can't be empty.");
         }
 
-        const result = await updateProjectname(projectName);
+        const result = await updateChatbotName(projectName);
 
         if (result.success)
           return toast.success("Your project name has been updated!");
