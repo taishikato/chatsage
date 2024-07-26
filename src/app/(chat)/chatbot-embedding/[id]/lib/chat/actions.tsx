@@ -47,6 +47,10 @@ const getChat = async (chatbotId: string, conversationId: string) => {
     conversation_id: conversationId,
   });
 
+  console.log("getChat");
+
+  console.log({ data });
+
   aiState.update({
     ...aiState.get(),
     // @ts-ignore
