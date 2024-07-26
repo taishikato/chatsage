@@ -1,11 +1,12 @@
 import { nanoid } from "@/lib/utils";
 import { Chat } from "./components/chat";
-import { type AI } from "./lib/chat/actions";
+import { AI } from "./lib/chat/actions";
 import { getMissingKeys } from "./actions";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "./components/header";
 import { Providers } from "./components/providers";
 import { LocalStorageProvider } from "./components/localstorage-provider";
+import { ClientWrapper } from "./components/client-wrapper";
 
 export const metadata = {
   title: "Next.js AI Chatbot",
@@ -41,11 +42,13 @@ export default async function IndexPage({
       >
         <LocalStorageProvider id={id} chatbotId={chatBotInternalId}>
           <Header chatBotName={chatBotData.name} />
-          <div className="relative flex h-[calc(100vh_-_theme(spacing.16))] overflow-hidden">
-            <AI initialAIState={{ chatId: id, messages: [] }}>
-              <Chat id={id} missingKeys={missingKeys} />
-            </AI>
-          </div>
+          <ClientWrapper>
+            <div className="relative flex h-[calc(100vh_-_theme(spacing.16))] overflow-hidden">
+              <AI initialAIState={{ chatId: id, messages: [] }}>
+                <Chat id={id} missingKeys={missingKeys} />
+              </AI>
+            </div>
+          </ClientWrapper>
         </LocalStorageProvider>
       </Providers>
     </>
