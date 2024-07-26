@@ -13,43 +13,24 @@ import { toast } from "sonner";
 import { BotMessage, UserMessage } from "./stocks/message";
 import { AI } from "../lib/chat/actions";
 import { Loader } from "lucide-react";
+import { useLocalStorage } from "./localstorage-provider";
 
 export interface ChatProps extends React.ComponentProps<"div"> {
   initialMessages?: Message[];
   id: string;
-  chatbotId: string;
   missingKeys: string[];
 }
 
-const conversationLocalStorageKeyPrefix = "sp_chatbodId_";
-
-export function Chat({ id, chatbotId, className, missingKeys }: ChatProps) {
+export function Chat({ id, className, missingKeys }: ChatProps) {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useUIState<typeof AI>();
   const [aiState] = useAIState();
   const { getChat } = useActions();
+  const { value: conversationId } = useLocalStorage();
 
   const [loadingInitialChatHistory, setLoadingInitialChatHistory] =
     useState(true);
-
-  const localStorageKeyForConversationId = `${conversationLocalStorageKeyPrefix}${chatbotId}`;
-  const [conversationId, setConversationId] = useState(() => {
-    if (typeof window !== "undefined") {
-      const storedValue = localStorage.getItem(
-        localStorageKeyForConversationId
-      );
-      return storedValue ?? id;
-    }
-
-    return id;
-  });
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(localStorageKeyForConversationId, conversationId);
-    }
-  }, [localStorageKeyForConversationId, conversationId]);
 
   useEffect(() => {
     const messagesLength = aiState.messages?.length;
