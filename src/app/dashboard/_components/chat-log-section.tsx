@@ -5,11 +5,6 @@ import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { SkeletonLoading } from "./skeleton-loading";
 
-type Message = {
-  role: string;
-  message: string;
-};
-
 export const ChatLogSection = () => {
   const supabase = createClient();
 
@@ -85,29 +80,26 @@ export const ChatLogSection = () => {
         {chatLogs.map((log) => {
           return (
             <div
-              key={log.id}
+              key={log.internal_id}
               className="space-y-3 p-4 rounded-xl cursor-pointer hover:bg-secondary"
             >
-              <div className="text-secondary-foreground/50 flex items-center justify-between">
-                <span>
-                  {Array.isArray(log.messages) &&
-                    (log.messages[0] as Message).message}
-                </span>
-                <time>
-                  {new Date(log.created_at).toLocaleString("en-US", {
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: true,
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </time>
-              </div>
-              <div>
-                {Array.isArray(log.messages) &&
-                  (log.messages[1] as Message).message}
-              </div>
+              {log.role === "user" ? (
+                <div className="text-secondary-foreground/50 flex items-center justify-between">
+                  <span>{log.message}</span>
+                  <time>
+                    {new Date(log.created_at).toLocaleString("en-US", {
+                      hour: "numeric",
+                      minute: "numeric",
+                      hour12: true,
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </time>
+                </div>
+              ) : (
+                <div>{log.message}</div>
+              )}
             </div>
           );
         })}
