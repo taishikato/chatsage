@@ -60,7 +60,7 @@ export const CrawlForm = () => {
           .update({
             status: "done",
           })
-          .match({ url, project_id: projectId });
+          .match({ url, chatbot_id: projectId });
 
         router.refresh();
 

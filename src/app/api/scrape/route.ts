@@ -54,7 +54,7 @@ export async function POST(req: Request): Promise<Response> {
     // save the url on Supabase
     await supabaseAdmin.from("urls").insert({
       url,
-      project_id: projectId,
+      chatbot_id: projectId,
     });
 
     return NextResponse.json({
