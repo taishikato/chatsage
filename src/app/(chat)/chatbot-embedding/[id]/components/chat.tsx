@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { ChatList } from "./chat-list";
 import { ChatPanel } from "./chat-panel";
 import { EmptyScreen } from "./empty-screen";
-import { useLocalStorage } from "../lib/hooks/use-local-storage";
 import { useEffect, useState } from "react";
 import { useUIState, useAIState } from "ai/rsc";
 import { Message } from "@/lib/types";
@@ -14,18 +13,36 @@ import { toast } from "sonner";
 
 export interface ChatProps extends React.ComponentProps<"div"> {
   initialMessages?: Message[];
-  id?: string;
+  id: string;
+  chatbotId: string;
   missingKeys: string[];
 }
 
-export function Chat({ id, className, missingKeys }: ChatProps) {
+const conversationLocalStorageKeyPrefix = "sp_chatbodId_";
+
+export function Chat({ id, chatbotId, className, missingKeys }: ChatProps) {
   const router = useRouter();
-  // const path = usePathname();
   const [input, setInput] = useState("");
   const [messages] = useUIState();
   const [aiState] = useAIState();
 
-  const [_, setNewChatId] = useLocalStorage("newChatId", id);
+  const localStorageKeyForConversationId = `${conversationLocalStorageKeyPrefix}${chatbotId}`;
+  const [conversationId, setConversationId] = useState(() => {
+    if (typeof window !== "undefined") {
+      const storedValue = localStorage.getItem(
+        localStorageKeyForConversationId
+      );
+      return storedValue ?? id;
+    }
+
+    return id;
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(localStorageKeyForConversationId, conversationId);
+    }
+  }, [localStorageKeyForConversationId, conversationId]);
 
   useEffect(() => {
     const messagesLength = aiState.messages?.length;
@@ -33,10 +50,6 @@ export function Chat({ id, className, missingKeys }: ChatProps) {
       router.refresh();
     }
   }, [aiState.messages, router]);
-
-  useEffect(() => {
-    setNewChatId(id);
-  });
 
   useEffect(() => {
     missingKeys.map((key) => {

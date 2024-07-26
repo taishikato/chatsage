@@ -41,7 +41,11 @@ export default async function IndexPage({
       >
         <div className="relative flex h-[calc(100vh_-_theme(spacing.16))] overflow-hidden">
           <AI initialAIState={{ chatId: id, messages: [] }}>
-            <Chat id={id} missingKeys={missingKeys} />
+            <Chat
+              id={id}
+              chatbotId={chatBotInternalId}
+              missingKeys={missingKeys}
+            />
           </AI>
         </div>
       </Providers>
