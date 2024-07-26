@@ -48,37 +48,37 @@ export function Chat({ id, className, missingKeys }: ChatProps) {
   const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
     useScrollAnchor();
 
-  useEffect(() => {
-    const fetchChat = async () => {
-      setLoadingInitialChatHistory(true);
+  // useEffect(() => {
+  //   const fetchChat = async () => {
+  //     setLoadingInitialChatHistory(true);
 
-      try {
-        const initialChat = await getChat(1, conversationId);
+  //     try {
+  //       const initialChat = await getChat(1, conversationId);
 
-        if (!initialChat) return;
+  //       if (!initialChat) return;
 
-        const messagesNode = initialChat.map((chat: any) => {
-          return {
-            id: nanoid(),
-            display:
-              chat.role === "user" ? (
-                <UserMessage>{chat.message}</UserMessage>
-              ) : (
-                <BotMessage content={chat.message} />
-              ),
-          };
-        });
+  //       const messagesNode = initialChat.map((chat: any) => {
+  //         return {
+  //           id: nanoid(),
+  //           display:
+  //             chat.role === "user" ? (
+  //               <UserMessage>{chat.message}</UserMessage>
+  //             ) : (
+  //               <BotMessage content={chat.message} />
+  //             ),
+  //         };
+  //       });
 
-        setMessages(messagesNode);
-      } catch (error) {
-        console.error("Error fetching chat:", error);
-      } finally {
-        setLoadingInitialChatHistory(false);
-      }
-    };
+  //       setMessages(messagesNode);
+  //     } catch (error) {
+  //       console.error("Error fetching chat:", error);
+  //     } finally {
+  //       setLoadingInitialChatHistory(false);
+  //     }
+  //   };
 
-    fetchChat();
-  }, []);
+  //   fetchChat();
+  // }, []);
 
   return (
     <div
