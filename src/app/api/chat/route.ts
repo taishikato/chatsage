@@ -65,19 +65,19 @@ export async function POST(req: Request) {
           const { done, value } = await reader.read();
           if (done) {
             // When the stream is done, save the response and close the controller
-            const { error } = await supabase.from("chat_logs").insert({
-              chatbot_id: 1,
-              messages: [
-                {
-                  role: "user",
-                  message: question.message,
-                },
-                {
-                  role: "assistant",
-                  message: fullResponse,
-                },
-              ],
-            });
+            // const { error } = await supabase.from("chat_logs").insert({
+            //   chatbot_id: 1,
+            //   messages: [
+            //     {
+            //       role: "user",
+            //       message: question.message,
+            //     },
+            //     {
+            //       role: "assistant",
+            //       message: fullResponse,
+            //     },
+            //   ],
+            // });
 
             controller.close();
             break;
