@@ -21,7 +21,7 @@ export default async function Home() {
         <Script
           async
           defer
-          src="/widget.js?chatbotId=58312165-6173-413b-8b41-3ef8e5047880"
+          src={`${process.env.NEXT_PUBLIC_APP_URL}/widget.js?chatbotId=58312165-6173-413b-8b41-3ef8e5047880`}
         />
       </main>
     </>

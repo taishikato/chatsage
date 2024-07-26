@@ -1,4 +1,6 @@
 (function () {
+  const APP_URL = "https://supachat-app.vercel.app";
+
   function getUrlParameter(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
@@ -69,7 +71,7 @@
     function toggleIframe() {
       if (iframe.style.display === "none") {
         if (!iframeLoaded) {
-          iframe.src = `http://localhost:3000/chatbot-embedding/${chatbotId}`;
+          iframe.src = `${APP_URL}/chatbot-embedding/${chatbotId}`;
           iframeLoaded = true;
         }
         iframe.style.display = "block";
@@ -101,7 +103,7 @@
   }
 
   // Make the API call to get chatbot status
-  fetch(`http://localhost:3000/api/get-chatbot-status/${chatbotId}`)
+  fetch(`${APP_URL}/api/get-chatbot-status/${chatbotId}`)
     .then((response) => response.json())
     .then((data) => {
       if (data.visibility === "public") {
