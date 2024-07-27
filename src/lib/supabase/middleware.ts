@@ -1,4 +1,3 @@
-import { getEnvVariable } from "@/app/(chat)/chatbot-embedding/[id]/lib/get-env-variable";
 import type { Database } from "@/types/supabase";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
@@ -9,8 +8,8 @@ export async function updateSession(request: NextRequest) {
   });
 
   const supabase = createServerClient<Database>(
-    getEnvVariable("NEXT_PUBLIC_SUPABASE_URL"),
-    getEnvVariable("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
