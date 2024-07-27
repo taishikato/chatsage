@@ -43,6 +43,17 @@ export async function updateSession(request: NextRequest) {
     if (!user) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
+
+    const { count } = await supabase
+      .from("chatbots")
+      .select("id", { count: "exact" })
+      .match({ user_auth_id: user.id });
+
+    if (!count) {
+      return NextResponse.redirect(
+        new URL("/create-project/project-name", request.url)
+      );
+    }
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
