@@ -29,8 +29,6 @@ export function Chat({ id, className, missingKeys }: ChatProps) {
   const { getChat } = useActions();
   const { value: conversationId } = useLocalStorage();
 
-  console.log({ conversationId });
-
   const [loadingInitialChatHistory, setLoadingInitialChatHistory] =
     useState(true);
 
