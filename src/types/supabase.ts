@@ -76,7 +76,7 @@ export type Database = {
           {
             foreignKeyName: "projects_user_auth_id_fkey"
             columns: ["user_auth_id"]
-            isOneToOne: false
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["auth_id"]
           },
