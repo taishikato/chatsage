@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+
 import axios from "redaxios";
 
 export const scrape = async (url: string) => {
@@ -9,13 +10,17 @@ export const scrape = async (url: string) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: project } = await supabase.from("chatbots").select("id").match({
-    user_auth_id: user!.id,
-  });
+  const { data: project } = await supabase
+    .from("chatbots")
+    .select("internal_id")
+    .match({
+      user_auth_id: user!.id,
+    });
 
-  await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/scrape`, {
+  // await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/scrape`, {
+  await axios.post(`http://localhost:3000/api/scrape`, {
     url,
-    projectId: project![0].id,
+    chatbotInternalId: project![0].internal_id,
   });
 
   return {

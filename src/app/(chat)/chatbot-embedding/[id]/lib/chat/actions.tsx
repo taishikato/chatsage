@@ -21,16 +21,10 @@ import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
 
 const supabaeAdmin = createAdminClient();
 
-const vectorStore = new SupabaseVectorStore(new OpenAIEmbeddings(), {
-  client: supabaeAdmin,
-  tableName: "vectors",
-  queryName: "match_vectors",
-  filter: {
-    chatbot_id: 1,
-  },
-});
-
-async function getRelevantContext(query: string) {
+async function getRelevantContext(
+  query: string,
+  vectorStore: SupabaseVectorStore
+) {
   const results = await vectorStore.similaritySearch(query, 4);
   return results.map((doc) => doc.pageContent).join("\n\n");
 }
@@ -65,8 +59,17 @@ const submitUserMessage = async (
 
   const userMessage = content;
 
+  const vectorStore = new SupabaseVectorStore(new OpenAIEmbeddings(), {
+    client: supabaeAdmin,
+    tableName: "vectors",
+    queryName: "match_vectors",
+    filter: {
+      chatbot_internal_id: chatbotId,
+    },
+  });
+
   // Fetch relevant context
-  const relevantContext = await getRelevantContext(content);
+  const relevantContext = await getRelevantContext(content, vectorStore);
 
   aiState.update({
     ...aiState.get(),

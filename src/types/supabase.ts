@@ -84,21 +84,21 @@ export type Database = {
       }
       urls: {
         Row: {
-          chatbot_id: number
+          chatbot_internal_id: string | null
           created_at: string
           id: number
           status: string | null
           url: string
         }
         Insert: {
-          chatbot_id: number
+          chatbot_internal_id?: string | null
           created_at?: string
           id?: number
           status?: string | null
           url: string
         }
         Update: {
-          chatbot_id?: number
+          chatbot_internal_id?: string | null
           created_at?: string
           id?: number
           status?: string | null
@@ -106,11 +106,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "urls_chatbot_id_fkey"
-            columns: ["chatbot_id"]
+            foreignKeyName: "urls_chatbot_internal_id_fkey"
+            columns: ["chatbot_internal_id"]
             isOneToOne: false
             referencedRelation: "chatbots"
-            referencedColumns: ["id"]
+            referencedColumns: ["internal_id"]
           },
         ]
       }

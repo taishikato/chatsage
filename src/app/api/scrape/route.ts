@@ -13,7 +13,7 @@ export async function POST(req: Request): Promise<Response> {
   const jsonReq = await req.json();
 
   const url = jsonReq.url;
-  const chatbotId = jsonReq.projectId;
+  const chatbotId = jsonReq.chatbotInternalId as string;
 
   const payload = {
     api_key: process.env.SCRAPER_API_KEY,
@@ -52,9 +52,9 @@ export async function POST(req: Request): Promise<Response> {
     await store.addDocuments(docs);
 
     // save the url on Supabase
-    await supabaseAdmin.from("urls").insert({
+    const { error } = await supabaseAdmin.from("urls").insert({
       url,
-      chatbot_id: chatbotId,
+      chatbot_internal_id: chatbotId,
     });
 
     return NextResponse.json({
