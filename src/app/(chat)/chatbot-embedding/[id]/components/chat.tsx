@@ -45,6 +45,23 @@ export function Chat({ id, className, missingKeys }: ChatProps) {
     });
   }, [missingKeys]);
 
+  useEffect(() => {
+    window.parent.postMessage(
+      { type: "setItem", content: "Hello from the chatbot!" },
+      "*"
+    );
+
+    const handleMessage = (event: any) => {
+      if (event.data.type === "GET_LOCAL_STORAGE") {
+        const value = localStorage.getItem(event.data.key);
+        window.parent.postMessage({ type: "LOCAL_STORAGE_VALUE", value }, "*");
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
   const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
     useScrollAnchor();
 
