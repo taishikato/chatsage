@@ -21,8 +21,8 @@ export default async function Home() {
         <Script
           async
           defer
-          // src={`${process.env.NEXT_PUBLIC_APP_URL}/api/embedding?chatbotId=58312165-6173-413b-8b41-3ef8e5047880`}
-          src={`http://localhost:3000/api/embedding?chatbotId=58312165-6173-413b-8b41-3ef8e5047880`}
+          src={`${process.env.NEXT_PUBLIC_APP_URL}/api/embedding?chatbotId=58312165-6173-413b-8b41-3ef8e5047880`}
+          // src={`http://localhost:3000/api/embedding?chatbotId=58312165-6173-413b-8b41-3ef8e5047880`}
         />
       </main>
     </>
