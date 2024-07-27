@@ -36,6 +36,27 @@ export const LocalStorageProvider = ({
     localStorage.setItem(localStorageKeyForConversationId, conversationId);
   }, [conversationId]);
 
+  useEffect(() => {
+    window.parent.postMessage(
+      {
+        type: "setItem",
+        key: localStorageKeyForConversationId,
+        value: conversationId,
+      },
+      "*"
+    );
+
+    // const handleMessage = (event: any) => {
+    //   if (event.data.type === "GET_LOCAL_STORAGE") {
+    //     const value = localStorage.getItem(event.data.key);
+    //     window.parent.postMessage({ type: "LOCAL_STORAGE_VALUE", value }, "*");
+    //   }
+    // };
+
+    // window.addEventListener("message", handleMessage);
+    // return () => window.removeEventListener("message", handleMessage);
+  }, [localStorageKeyForConversationId, conversationId]);
+
   return (
     <LocalStorageContext.Provider
       value={{ value: conversationId, setValue: setConversationId }}
