@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ProjectUpdateForm } from "./_components/project-update-form";
 import { ProjectVisibilityForm } from "./_components/project-visibility-form";
+import { ProjectConnect } from "./_components/project-connect";
 
 export default async function SettingsPage() {
   const supabase = createClient();
@@ -14,7 +15,7 @@ export default async function SettingsPage() {
 
   const { data, error } = await supabase
     .from("chatbots")
-    .select("name, is_public")
+    .select("name, is_public, internal_id")
     .match({
       user_auth_id: user.id,
     })
@@ -38,6 +39,14 @@ export default async function SettingsPage() {
         <ProjectVisibilityForm
           chatbotVisibility={data.is_public ? "public" : "private"}
         />
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Chatbot connect</CardTitle>
+        </CardHeader>
+
+        <ProjectConnect chatbotId={data.internal_id} />
       </Card>
 
       <Card x-chunk="dashboard-04-chunk-2">
