@@ -9,8 +9,8 @@ import { useEffect, useState } from "react";
 import { scrape } from "@/actions/scrape";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
-import { statusColumns } from "@/app/create-project/data-sources/sitemap/_components/status-columns";
-import { sourceListColumns } from "@/app/create-project/data-sources/sitemap/_components/source-list-columns";
+import { statusColumns } from "./status-columns";
+import { sourceListColumns } from "./source-list-columns";
 import { useRouter } from "next/navigation";
 
 const initialState = {
