@@ -5,12 +5,13 @@ import { SitemapButton } from "./sitemap-button";
 import { useFormState } from "react-dom";
 import { findSites } from "@/actions/find-sites";
 import { DataTable } from "@/components/ui/data-table";
-import { statusColumns } from "./status-columns";
-import { sourceListColumns } from "./source-list-columns";
 import { useEffect, useState } from "react";
 import { scrape } from "@/actions/scrape";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+import { statusColumns } from "@/app/create-project/data-sources/sitemap/_components/status-columns";
+import { sourceListColumns } from "@/app/create-project/data-sources/sitemap/_components/source-list-columns";
+import { useRouter } from "next/navigation";
 
 const initialState = {
   sites: [],
@@ -18,6 +19,7 @@ const initialState = {
 
 export const SitemapForm = () => {
   const supabase = createClient();
+  const router = useRouter();
 
   const [projectId, setProjectId] = useState<number | null>(null);
   const [scraping, setScraping] = useState(false);
@@ -75,7 +77,7 @@ export const SitemapForm = () => {
 
   return (
     <>
-      <form className="flex w-full items-center space-x-2" action={formAction}>
+      <form className="flex w-full items-center gap-2" action={formAction}>
         <Input
           type="url"
           name="url"
@@ -133,6 +135,8 @@ export const SitemapForm = () => {
                       chatbot_id: projectId,
                     });
                 }
+
+                router.refresh();
               }}
             >
               <Button

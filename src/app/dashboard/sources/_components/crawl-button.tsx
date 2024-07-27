@@ -10,7 +10,7 @@ export const CrawlButton = () => {
   return (
     <Button disabled={pending} type="submit">
       {pending && <Loader className="size-4 mr-2 animate-spin" />}
-      Fetch more links
+      Fetch a link
     </Button>
   );
 };

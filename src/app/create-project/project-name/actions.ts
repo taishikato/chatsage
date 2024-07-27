@@ -18,12 +18,12 @@ export const saveProjectName = async (formData: FormData) => {
     .select("id", { count: "exact" })
     .match({ user_auth_id: user.id });
 
-  if ((count as number) > 0) redirect("/create-project/data-sources");
+  if ((count as number) > 0) redirect("/dashboard/sources");
 
   await supabase.from("chatbots").insert({
     name,
     user_auth_id: user.id,
   });
 
-  redirect("/create-project/data-sources");
+  redirect("/dashboard/sources");
 };
