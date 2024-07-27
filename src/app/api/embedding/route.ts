@@ -1,6 +1,6 @@
 import { type NextRequest } from "next/server";
 
-const APP_URL = "https://supachat-app.vercel.app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
