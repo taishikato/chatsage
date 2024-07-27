@@ -8,25 +8,25 @@ import { FooterText } from "./footer";
 // import { nanoid } from "nanoid";
 // import { UserMessage } from "./stocks/message";
 
-export interface ChatPanelProps {
+export type ChatPanelProps = {
   id?: string;
   title?: string;
   input: string;
   setInput: (value: string) => void;
   isAtBottom: boolean;
   scrollToBottom: () => void;
-  conversationId: string;
-}
+  chatbotId: string;
+};
 
-export function ChatPanel({
+export const ChatPanel = ({
   id,
   title,
   input,
   setInput,
   isAtBottom,
   scrollToBottom,
-  conversationId,
-}: ChatPanelProps) {
+  chatbotId,
+}: ChatPanelProps) => {
   // const [aiState] = useAIState();
   // const [messages, setMessages] = useUIState<typeof AI>();
   // const { submitUserMessage } = useActions();
@@ -99,10 +99,10 @@ export function ChatPanel({
         </div> */}
 
         <div className="border-t bg-background shadow-lg">
-          <PromptForm input={input} setInput={setInput} conversationId={conversationId} />
+          <PromptForm input={input} setInput={setInput} />
           <FooterText className="h-10 flex items-center justify-center text-xs bg-muted/70" />
         </div>
       </div>
     </div>
   );
-}
+};

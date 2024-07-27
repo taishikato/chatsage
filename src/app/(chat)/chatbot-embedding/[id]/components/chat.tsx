@@ -19,9 +19,10 @@ export interface ChatProps extends React.ComponentProps<"div"> {
   initialMessages?: Message[];
   id: string;
   missingKeys: string[];
+  chatbotId: string;
 }
 
-export function Chat({ id, className, missingKeys }: ChatProps) {
+export function Chat({ id, className, missingKeys, chatbotId }: ChatProps) {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useUIState<typeof AI>();
@@ -53,7 +54,7 @@ export function Chat({ id, className, missingKeys }: ChatProps) {
       setLoadingInitialChatHistory(true);
 
       try {
-        const initialChat = await getChat(1, conversationId);
+        const initialChat = await getChat(chatbotId, conversationId);
 
         if (!initialChat) return;
 
@@ -108,7 +109,7 @@ export function Chat({ id, className, missingKeys }: ChatProps) {
             setInput={setInput}
             isAtBottom={isAtBottom}
             scrollToBottom={scrollToBottom}
-            conversationId={conversationId}
+            chatbotId={chatbotId}
           />
         </>
       )}

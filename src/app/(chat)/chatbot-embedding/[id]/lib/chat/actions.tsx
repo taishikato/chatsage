@@ -15,11 +15,9 @@ import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase"
 import { BotMessage } from "../../components/stocks";
 
 import { nanoid } from "@/lib/utils";
-// import { saveChat } from '@/app/actions'
 import { SpinnerMessage, UserMessage } from "../../components/stocks/message";
 import { Chat, Message } from "@/lib/types";
 import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
-// import { auth } from '@/auth'
 
 const supabaeAdmin = createAdminClient();
 
@@ -47,10 +45,6 @@ const getChat = async (chatbotId: string, conversationId: string) => {
     conversation_id: conversationId,
   });
 
-  console.log("getChat");
-
-  console.log({ data });
-
   aiState.update({
     ...aiState.get(),
     // @ts-ignore
@@ -60,7 +54,11 @@ const getChat = async (chatbotId: string, conversationId: string) => {
   return data;
 };
 
-const submitUserMessage = async (content: string, conversationId: string) => {
+const submitUserMessage = async (
+  content: string,
+  chatbotId: string,
+  conversationId: string
+) => {
   "use server";
 
   const aiState = getMutableAIState<typeof AI>();
@@ -137,13 +135,13 @@ const submitUserMessage = async (content: string, conversationId: string) => {
           {
             role: "user",
             message: userMessage,
-            chatbotId: 1,
+            chatbotId: chatbotId,
             conversationId,
           },
           {
             role: "assistant",
             message: content,
-            chatbotId: 1,
+            chatbotId: chatbotId,
             conversationId,
           },
         ];
@@ -152,7 +150,7 @@ const submitUserMessage = async (content: string, conversationId: string) => {
           const { error } = await supabaeAdmin.from("chat_logs").insert({
             role: message.role,
             message: message.message,
-            chatbot_id: message.chatbotId,
+            chatbot_internal_id: message.chatbotId,
             conversation_id: message.conversationId,
           });
         }

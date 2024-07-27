@@ -30,10 +30,6 @@ export default async function IndexPage({
     .match({ internal_id: chatBotInternalId })
     .single();
 
-  console.log({ chatBotInternalId, chatBotData });
-
-  // if (error || !chatBotData) throw new Error(error.message ?? "No data found");
-
   return (
     <>
       <Providers
@@ -47,7 +43,11 @@ export default async function IndexPage({
           <ClientWrapper>
             <div className="relative flex h-[calc(100vh_-_theme(spacing.16))] overflow-hidden">
               <AI initialAIState={{ chatId: id, messages: [] }}>
-                <Chat id={id} missingKeys={missingKeys} />
+                <Chat
+                  id={id}
+                  missingKeys={missingKeys}
+                  chatbotId={chatBotInternalId}
+                />
               </AI>
             </div>
           </ClientWrapper>

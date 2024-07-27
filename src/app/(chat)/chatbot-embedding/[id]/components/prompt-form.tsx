@@ -14,20 +14,22 @@ import { useEnterSubmit } from "../lib/hooks/use-enter-submit";
 import { nanoid } from "nanoid";
 
 import { Send } from "lucide-react";
+import { useLocalStorage } from "./localstorage-provider";
+import { useParams } from "next/navigation";
 
 export function PromptForm({
   input,
   setInput,
-  conversationId,
 }: {
   input: string;
   setInput: (value: string) => void;
-  conversationId: string;
 }) {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { value: conversationId } = useLocalStorage();
   const { submitUserMessage } = useActions();
   const [_, setMessages] = useUIState<typeof AI>();
+  const { id: chatbotId } = useParams();
 
   useEffect(() => {
     if (inputRef.current) {
@@ -60,7 +62,11 @@ export function PromptForm({
         ]);
 
         // Submit and get response message
-        const responseMessage = await submitUserMessage(value, conversationId);
+        const responseMessage = await submitUserMessage(
+          value,
+          chatbotId,
+          conversationId
+        );
 
         setMessages((currentMessages) => [...currentMessages, responseMessage]);
       }}

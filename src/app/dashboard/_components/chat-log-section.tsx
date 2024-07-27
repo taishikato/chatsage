@@ -30,7 +30,7 @@ export const ChatLogSection = () => {
         // Get the project ID for the logged-in user
         const { data: projectData, error: projectError } = await supabase
           .from("chatbots")
-          .select("id")
+          .select("internal_id")
           .eq("user_auth_id", user!.id)
           .single();
 
@@ -44,7 +44,7 @@ export const ChatLogSection = () => {
         const { data, error } = await supabase
           .from("chat_logs")
           .select("*")
-          .match({ chatbot_id: projectData.id })
+          .match({ chatbot_internal_id: projectData.internal_id })
           .order("created_at", { ascending: true });
 
         if (error) {
