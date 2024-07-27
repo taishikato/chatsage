@@ -96,17 +96,6 @@ export async function GET(req: NextRequest) {
     // Append the iframe and button to the body
     document.body.appendChild(iframe);
     document.body.appendChild(toggleButton);
-
-    window.addEventListener('message', function(event) {
-      if (event.data.type === 'setItem') {
-      console.log(event.data)
-        // localStorage.setItem(event.data.key, event.data.value);
-        // event.source.postMessage({type: 'setItemComplete', key: event.data.key}, "*");
-      } else if (event.data.type === 'getItem') {
-        const value = localStorage.getItem(event.data.key);
-        event.source.postMessage({type: 'getItemComplete', key: event.data.key, value: value}, "*");
-      }
-    }, false);
   }
 
   // Make the API call to get chatbot status
