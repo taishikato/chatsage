@@ -41,7 +41,7 @@ const getChat = async (chatbotId: string, conversationId: string) => {
   const aiState = getMutableAIState<typeof AI>();
 
   const { data } = await supabaeAdmin.from("chat_logs").select("*").match({
-    chatbot_id: chatbotId,
+    chatbot_internal_id: chatbotId,
     conversation_id: conversationId,
   });
 
