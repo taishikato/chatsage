@@ -9,7 +9,7 @@ export const deleteSource = async (sourceId: number) => {
   try {
     const { data } = await supabase
       .from("urls")
-      .select("url, chatbot_id")
+      .select("url, chatbot_internal_id")
       .match({
         id: sourceId,
       });
@@ -18,7 +18,7 @@ export const deleteSource = async (sourceId: number) => {
     const { error: vectorDeletionError } = await supabase
       .from("vectors")
       .delete()
-      .filter("metadata->chatbot_id", "eq", data?.[0].chatbot_id)
+      .filter("metadata->chatbot_id", "eq", data?.[0].chatbot_internal_id)
       .filter("metadata->>url::text", "eq", data?.[0].url);
 
     if (vectorDeletionError) {
