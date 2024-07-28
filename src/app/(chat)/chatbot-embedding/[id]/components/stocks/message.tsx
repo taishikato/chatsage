@@ -1,29 +1,28 @@
 "use client";
 
-import { IconOpenAI, IconUser } from "../ui/icons";
+// import { IconOpenAI } from "../ui/icons";
 import { cn } from "@/lib/utils";
-import { spinner } from "./spinner";
 import { CodeBlock } from "../ui/codeblock";
 import { MemoizedReactMarkdown } from "../markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { StreamableValue } from "ai/rsc";
 import { useStreamableText } from "../../lib/hooks/use-streamable-text";
+import { Loader } from "lucide-react";
 
 // Different types of message bubbles.
 
-export function UserMessage({ children }: { children: React.ReactNode }) {
+export const UserMessage = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="group relative flex items-start md:-ml-12">
-      <div className="flex size-[25px] shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
-        <IconUser />
-      </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden pl-2">
-        {children}
+    <div className="flex flex-col gap-2 py-6 md:py-12">
+      <div className="flex justify-end">
+        <div className="text-sm bg-blue-400 text-white rounded-xl p-3">
+          {children}
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export function BotMessage({
   content,
@@ -35,13 +34,13 @@ export function BotMessage({
   const text = useStreamableText(content);
 
   return (
-    <div className={cn("group relative flex items-start md:-ml-12", className)}>
-      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
+    <div className={cn("group relative flex items-start", className)}>
+      {/* <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
         <IconOpenAI />
-      </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
+      </div> */}
+      <div className="flex-1 space-y-2 overflow-hidden flex flex-start">
         <MemoizedReactMarkdown
-          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 bg-secondary p-3 rounded-xl"
           remarkPlugins={[remarkGfm, remarkMath]}
           components={{
             p({ children }) {
@@ -92,13 +91,8 @@ export function BotMessage({
 
 export function SpinnerMessage() {
   return (
-    <div className="group relative flex items-start md:-ml-12">
-      <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
-        <IconOpenAI />
-      </div>
-      <div className="ml-4 h-[24px] flex flex-row items-center flex-1 space-y-2 overflow-hidden px-1">
-        {spinner}
-      </div>
+    <div className="flex justify-start py-6 md:py-12">
+      <Loader className="animate-spin size-5" />
     </div>
   );
 }
