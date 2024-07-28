@@ -14,7 +14,7 @@ import { Loader } from "lucide-react";
 
 export const UserMessage = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-col gap-2 py-6 md:py-12">
+    <div className="flex flex-col gap-2 pb-6">
       <div className="flex justify-end">
         <div className="text-sm bg-blue-400 text-white rounded-xl p-3">
           {children}
