@@ -34,7 +34,7 @@ export function BotMessage({
   const text = useStreamableText(content);
 
   return (
-    <div className={cn("group relative flex items-start", className)}>
+    <div className={cn("group relative flex items-start pb-6", className)}>
       {/* <div className="flex size-[24px] shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
         <IconOpenAI />
       </div> */}
