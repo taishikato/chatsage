@@ -132,7 +132,7 @@ export const SitemapForm = () => {
                     })
                     .match({
                       url: site,
-                      chatbot_id: projectId,
+                      chatbot_internal_id: projectId,
                     });
                 }
 
