@@ -1,5 +1,6 @@
 "use server";
 
+import { APP_URL } from "@/lib/consts";
 import { createClient } from "@/lib/supabase/server";
 
 import axios from "redaxios";
@@ -17,8 +18,7 @@ export const scrape = async (url: string) => {
       user_auth_id: user!.id,
     });
 
-  // await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/scrape`, {
-  await axios.post(`http://localhost:3000/api/scrape`, {
+  await axios.post(`${APP_URL}/api/scrape`, {
     url,
     chatbotInternalId: project![0].internal_id,
   });

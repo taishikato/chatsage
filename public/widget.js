@@ -26,6 +26,7 @@
     iframe.style.borderRadius = "10px";
     iframe.style.boxShadow = "0 0 10px rgba(0,0,0,0.1)";
     iframe.style.zIndex = "9999";
+    iframe.style.backgroundColor = "#ffffff";
 
     // Create a button to toggle the iframe
     const toggleButton = document.createElement("button");

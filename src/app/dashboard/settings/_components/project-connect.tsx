@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { CardContent, CardFooter } from "@/components/ui/card";
+import { APP_URL } from "@/lib/consts";
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 
@@ -11,7 +12,7 @@ export const ProjectConnect = ({ chatbotId }: { chatbotId: string }) => {
   const scriptText = `<script
   async
   defer
-  src="${process.env.NEXT_PUBLIC_APP_URL}/api/embedding?chatbotId=${chatbotId}"
+  src="${APP_URL}/api/embedding?chatbotId=${chatbotId}"
 />`;
 
   const handleCopy = async () => {
