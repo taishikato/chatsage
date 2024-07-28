@@ -21,8 +21,6 @@ export default async function SourcesPage() {
       user_auth_id: user!.id,
     });
 
-  console.log({ projectAndUrls });
-
   return (
     <div>
       <Card className="p-6">
