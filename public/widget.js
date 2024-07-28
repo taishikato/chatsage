@@ -1,18 +1,4 @@
 (function () {
-  const APP_URL = "https://supachat-app.vercel.app";
-
-  function getUrlParameter(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-    var results = regex.exec(document.currentScript.src);
-    return results === null
-      ? ""
-      : decodeURIComponent(results[1].replace(/\+/g, " "));
-  }
-
-  // Get the chatbotId from the script src
-  const chatbotId = getUrlParameter("chatbotId");
-
   // Function to create and display the toggle button and iframe
   function createChatbotUI() {
     // Create the iframe element
@@ -105,13 +91,22 @@
 
   // Make the API call to get chatbot status
   fetch(`${APP_URL}/api/get-chatbot-status/${chatbotId}`, {
+    method: "GET",
     mode: "cors",
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
     .then((data) => {
       if (data.visibility === "public") {
         createChatbotUI();
       }
     })
-    .catch((error) => console.error("Error fetching chatbot status:", error));
+    .catch((error) => {
+      console.error("Error fetching chatbot status:", error);
+      // Optionally, you can add a fallback behavior here
+    });
 })();
