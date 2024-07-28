@@ -71,6 +71,8 @@ export function Chat({ id, className, missingKeys, chatbotId }: ChatProps) {
         });
 
         setMessages(messagesNode);
+
+        scrollToBottom();
       } catch (error) {
         console.error("Error fetching chat:", error);
       } finally {
