@@ -21,7 +21,7 @@ export const SitemapForm = () => {
   const supabase = createClient();
   const router = useRouter();
 
-  const [projectId, setProjectId] = useState<number | null>(null);
+  const [projectId, setProjectId] = useState<string | null>(null);
   const [scraping, setScraping] = useState(false);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [scrapingInitiated, setScrapingInitiated] = useState(false);
@@ -57,13 +57,13 @@ export const SitemapForm = () => {
       if (user) {
         const { data: projects, error: projectError } = await supabase
           .from("chatbots")
-          .select("id")
+          .select("internal_id")
           .match({ user_auth_id: user.id });
 
         if (projectError) {
           console.error("Error fetching project ID:", projectError);
         } else if (projects.length > 0) {
-          const projectId = projects[0].id;
+          const projectId = projects[0].internal_id;
           console.log("Fetched project ID:", projectId);
           setProjectId(projectId || null);
         } else {
