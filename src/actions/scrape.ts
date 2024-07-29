@@ -18,7 +18,7 @@ export const scrape = async (url: string) => {
       user_auth_id: user!.id,
     });
 
-  await axios.post(`${APP_URL}/api/scrape`, {
+  await axios.post(`${APP_URL}/api/protetced/scrape`, {
     url,
     chatbotInternalId: project![0].internal_id,
   });
