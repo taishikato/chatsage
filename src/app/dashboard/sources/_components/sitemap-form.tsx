@@ -12,6 +12,7 @@ import { createClient } from "@/lib/supabase/client";
 import { statusColumns } from "./status-columns";
 import { sourceListColumns } from "./source-list-columns";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const initialState = {
   sites: [],
@@ -74,6 +75,10 @@ export const SitemapForm = () => {
 
     fetchProjectId();
   }, [supabase]);
+
+  if (state.success === false) {
+    toast.error("URL is required");
+  }
 
   return (
     <>
