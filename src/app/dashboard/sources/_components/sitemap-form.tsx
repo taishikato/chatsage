@@ -84,7 +84,6 @@ export const SitemapForm = () => {
           id="url"
           className="flex-1"
           placeholder="htttps://www.yourdomain.com/sitemap.xml"
-          defaultValue="https://www.onseninsider.com/sitemap.xml"
         />
         <SitemapButton />
       </form>
