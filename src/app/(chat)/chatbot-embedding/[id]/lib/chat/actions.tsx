@@ -3,7 +3,6 @@ import "server-only";
 import {
   createAI,
   getMutableAIState,
-  getAIState,
   streamUI,
   createStreamableValue,
 } from "ai/rsc";
@@ -179,14 +178,6 @@ export const AI = createAI<AIState, UIState>({
   },
   initialUIState: [],
   initialAIState: { chatId: nanoid(), messages: [] },
-  onGetUIState: async () => {
-    "use server";
-
-    const aiState = getAIState() as Chat;
-    const uiState = getUIStateFromAIState(aiState);
-
-    return uiState;
-  },
 });
 
 export const getUIStateFromAIState = (aiState: Chat) => {
