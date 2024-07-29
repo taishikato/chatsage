@@ -47,12 +47,11 @@ export const Hero = () => {
             </a>
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Deploy to the cloud with confidence
+            24/7 Customer Service for your website
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-            fugiat aliqua.
+            Deploy AI-driven chatbots to handle customer inquiries instantly and
+            efficiently, improving response times.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <a
@@ -61,7 +60,6 @@ export const Hero = () => {
             >
               Get started
             </a>
-
             <a
               target="_blank"
               href="https://github.com/taishikato/chatsage"
@@ -80,17 +78,6 @@ export const Hero = () => {
             src={`${APP_URL}/chatbot-embedding/7003ad0e-de27-44d3-b648-c2cd3cac01b7`}
             className="rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 w-full h-full"
           />
-          {/* <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4"> */}
-          {/* <img
-                alt="App screenshot"
-                src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
-                width={2432}
-                height={1442}
-                className="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-900/10"
-              /> */}
-          {/* </div>
-          </div> */}
         </div>
       </div>
     </div>

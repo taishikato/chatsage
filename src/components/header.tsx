@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { APP_NAME } from "@/lib/consts";
-import { MoveRight } from "lucide-react";
+import { MoveRight, Star } from "lucide-react";
 import { IconGitHub } from "@/app/(chat)/chatbot-embedding/[id]/components/ui/icons";
 import { cn } from "@/lib/utils";
 
@@ -26,11 +26,10 @@ export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           href="https://github.com/taishikato/chatsage"
           className={cn(
             buttonVariants({ variant: "secondary" }),
-            "mr-8 items-center"
+            "mr-8 items-center gap-x-2"
           )}
         >
-          <IconGitHub className="mr-2" />
-          <span>Star on GitHub</span>
+          <Star className="size-4" /> on <IconGitHub />
         </a>
         {!isLoggedIn ? (
           <Button asChild>
