@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
-    <header className="border-b h-[56px]">
+    <header className="border-b h-[64px]">
       <div className="max-w-7xl mx-auto flex items-center px-6 py-2 h-full">
         <h1 className="mr-auto">
           <Link href="/" className="flex items-center">
@@ -26,7 +26,7 @@ export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           href="https://github.com/taishikato/chatsage"
           className={cn(
             buttonVariants({ variant: "secondary" }),
-            "mr-8 items-center gap-x-2"
+            "mr-4 items-center gap-x-2"
           )}
         >
           <Star className="size-4" /> on <IconGitHub />
