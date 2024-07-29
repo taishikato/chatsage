@@ -20,7 +20,7 @@ export default async function Home() {
         <Script
           async
           defer
-          src={`${APP_URL}/api/embedding?chatbotId=7003ad0e-de27-44d3-b648-c2cd3cac01b7`}
+          src={`${APP_URL}/api/embedding?chatbotId=fe0b09fa-b4b3-4461-a9d5-5e256b87aa83`}
         />
       </main>
     </>
