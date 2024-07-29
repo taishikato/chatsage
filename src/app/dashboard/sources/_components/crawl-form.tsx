@@ -12,7 +12,7 @@ export const CrawlForm = () => {
   const router = useRouter();
   const supabase = createClient();
 
-  const [projectId, setProjectId] = useState<number | null>(null);
+  const [projectId, setProjectId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProjectId = async () => {
@@ -24,13 +24,13 @@ export const CrawlForm = () => {
       if (user) {
         const { data: projects, error: projectError } = await supabase
           .from("chatbots")
-          .select("id")
+          .select("internal_id")
           .match({ user_auth_id: user.id });
 
         if (projectError) {
           console.error("Error fetching project ID:", projectError);
         } else if (projects.length > 0) {
-          const projectId = projects[0].id;
+          const projectId = projects[0].internal_id;
           console.log("Fetched project ID:", projectId);
           setProjectId(projectId || null);
         } else {
@@ -60,7 +60,7 @@ export const CrawlForm = () => {
           .update({
             status: "done",
           })
-          .match({ url, chatbot_id: projectId });
+          .match({ url, chatbot_internal_id: projectId });
 
         router.refresh();
 
