@@ -2,11 +2,11 @@ import { nanoid } from "@/lib/utils";
 import { Chat } from "./components/chat";
 import { AI } from "./lib/chat/actions";
 import { getMissingKeys } from "./actions";
-import { createClient } from "@/lib/supabase/server";
 import { Header } from "./components/header";
 import { Providers } from "./components/providers";
 import { LocalStorageProvider } from "./components/localstorage-provider";
 import { ClientWrapper } from "./components/client-wrapper";
+import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
 
 export const metadata = {
   title: "Next.js AI Chatbot",
@@ -20,7 +20,7 @@ export default async function IndexPage({
   const id = nanoid();
   const missingKeys = await getMissingKeys();
 
-  const supbabase = createClient();
+  const supbabase = createAdminClient();
 
   const chatBotInternalId = params.id;
 

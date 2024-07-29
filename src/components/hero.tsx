@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import { buttonVariants } from "./ui/button";
 import { IconGitHub } from "@/app/(chat)/chatbot-embedding/[id]/components/ui/icons";
+import { APP_URL } from "@/lib/consts";
 
 export const Hero = () => {
   return (
@@ -29,13 +30,8 @@ export const Hero = () => {
           strokeWidth={0}
         />
       </svg>
-      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 grid grid-cols-1 items-center gap-y-12 lg:grid-cols-2 lg:px-8 lg:py-40">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-          <img
-            alt="Your Company"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            className="h-11"
-          />
           <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
               <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
@@ -79,18 +75,22 @@ export const Hero = () => {
             </a>
           </div>
         </div>
-        <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
-          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <img
+        <div className="aspect-[1/2] sm:aspect-[3/4] mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32 flex-1">
+          <iframe
+            src={`${APP_URL}/chatbot-embedding/7003ad0e-de27-44d3-b648-c2cd3cac01b7`}
+            className="rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 w-full h-full"
+          />
+          {/* <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
+            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4"> */}
+          {/* <img
                 alt="App screenshot"
                 src="https://tailwindui.com/img/component-images/project-app-screenshot.png"
                 width={2432}
                 height={1442}
                 className="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-900/10"
-              />
-            </div>
-          </div>
+              /> */}
+          {/* </div>
+          </div> */}
         </div>
       </div>
     </div>
