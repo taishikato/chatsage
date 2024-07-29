@@ -16,7 +16,7 @@ importers:
         version: 2.1.5(react@18.3.1)
       '@langchain/community':
         specifier: ^0.2.19
-        version: 0.2.20(@supabase/postgrest-js@1.15.8)(@supabase/supabase-js@2.44.4)(ignore@5.3.1)(openai@4.52.7)(ws@8.18.0)
+        version: 0.2.20(@supabase/postgrest-js@1.15.8)(@supabase/supabase-js@2.44.4)(@upstash/ratelimit@2.0.1)(@upstash/redis@1.33.0)(crypto-js@4.2.0)(ignore@5.3.1)(openai@4.52.7)(ws@8.18.0)
       '@langchain/openai':
         specifier: ^0.2.4
         version: 0.2.4(langchain@0.2.10(@supabase/supabase-js@2.44.4)(ignore@5.3.1)(openai@4.52.7)(ws@8.18.0))
@@ -62,6 +62,12 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.19.3
         version: 8.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@upstash/ratelimit':
+        specifier: ^2.0.1
+        version: 2.0.1
+      '@upstash/redis':
+        specifier: ^1.33.0
+        version: 1.33.0
       ai:
         specifier: ^3.2.32
         version: 3.2.32(openai@4.52.7)(react@18.3.1)(svelte@4.2.18)(vue@3.4.33(typescript@5.5.3))(zod@3.23.8)
@@ -1381,6 +1387,16 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
+  '@upstash/core-analytics@0.0.10':
+    resolution: {integrity: sha512-7qJHGxpQgQr9/vmeS1PktEwvNAF7TI4iJDi8Pu2CFZ9YUGHZH4fOP5TfYlZ4aVxfopnELiE4BS4FBjyK7V1/xQ==}
+    engines: {node: '>=16.0.0'}
+
+  '@upstash/ratelimit@2.0.1':
+    resolution: {integrity: sha512-J+0hlkvWUjlVrjcBQhWx7gbaUGsvFF59i+GAx7YQk8L0E0MQ93xzCPu02uaXhGDJGkxiar7nRRPqj3hs+CdAJg==}
+
+  '@upstash/redis@1.33.0':
+    resolution: {integrity: sha512-5WOilc7AE0ITAdE3NCyMwgOq1n3RHcqW0OfmbotiAyfA+QAEe1R7kXin8L/Yladgdc5lkA0GcYyewqKfAw53jQ==}
+
   '@vue/compiler-core@3.4.33':
     resolution: {integrity: sha512-MoIREbkdPQlnGfSKDMgzTqzqx5nmEjIc0ydLVYlTACGBsfvOJ4tHSbZXKVF536n6fB+0eZaGEOqsGThPpdvF5A==}
 
@@ -1704,6 +1720,9 @@ packages:
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
+
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   css-select@5.1.0:
     resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}
@@ -4012,7 +4031,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@langchain/community@0.2.20(@supabase/postgrest-js@1.15.8)(@supabase/supabase-js@2.44.4)(ignore@5.3.1)(openai@4.52.7)(ws@8.18.0)':
+  '@langchain/community@0.2.20(@supabase/postgrest-js@1.15.8)(@supabase/supabase-js@2.44.4)(@upstash/ratelimit@2.0.1)(@upstash/redis@1.33.0)(crypto-js@4.2.0)(ignore@5.3.1)(openai@4.52.7)(ws@8.18.0)':
     dependencies:
       '@langchain/core': 0.2.17(langchain@0.2.10(@supabase/supabase-js@2.44.4)(ignore@5.3.1)(openai@4.52.7)(ws@8.18.0))(openai@4.52.7)
       '@langchain/openai': 0.2.4(langchain@0.2.10(@supabase/supabase-js@2.44.4)(ignore@5.3.1)(openai@4.52.7)(ws@8.18.0))
@@ -4028,6 +4047,9 @@ snapshots:
     optionalDependencies:
       '@supabase/postgrest-js': 1.15.8
       '@supabase/supabase-js': 2.44.4
+      '@upstash/ratelimit': 2.0.1
+      '@upstash/redis': 1.33.0
+      crypto-js: 4.2.0
       ignore: 5.3.1
       ws: 8.18.0
     transitivePeerDependencies:
@@ -4720,6 +4742,18 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
+  '@upstash/core-analytics@0.0.10':
+    dependencies:
+      '@upstash/redis': 1.33.0
+
+  '@upstash/ratelimit@2.0.1':
+    dependencies:
+      '@upstash/core-analytics': 0.0.10
+
+  '@upstash/redis@1.33.0':
+    dependencies:
+      crypto-js: 4.2.0
+
   '@vue/compiler-core@3.4.33':
     dependencies:
       '@babel/parser': 7.24.8
@@ -5082,6 +5116,8 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  crypto-js@4.2.0: {}
 
   css-select@5.1.0:
     dependencies:

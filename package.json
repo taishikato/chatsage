@@ -28,6 +28,8 @@
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.4",
     "@tanstack/react-table": "^8.19.3",
+    "@upstash/ratelimit": "^2.0.1",
+    "@upstash/redis": "^1.33.0",
     "ai": "^3.2.32",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

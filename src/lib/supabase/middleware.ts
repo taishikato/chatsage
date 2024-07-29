@@ -1,8 +1,38 @@
 import type { Database } from "@/types/supabase";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(10, "10 s"),
+});
 
 export async function updateSession(request: NextRequest) {
+  /**
+   * Rate limiting
+   */
+  if (
+    request.method === "POST" &&
+    request.nextUrl.pathname.startsWith("/chatbot-embedding")
+  ) {
+    // apply your logic here
+    const ip = request.ip ?? "127.0.0.1";
+    const { success } = await ratelimit.limit(ip);
+
+    if (!success)
+      return NextResponse.json(
+        {
+          messahe: "too many requests",
+        },
+        { status: 429 }
+      );
+  }
+
+  /**
+   * SUpabase stuff
+   */
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -80,6 +110,5 @@ export async function updateSession(request: NextRequest) {
   //    return myNewResponse
   // If this is not done, you may be causing the browser and server to go out
   // of sync and terminate the user's session prematurely!
-
   return supabaseResponse;
 }
