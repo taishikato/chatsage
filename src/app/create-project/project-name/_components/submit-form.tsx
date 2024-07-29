@@ -15,11 +15,11 @@ export const SubmitForm = () => {
   return (
     <form action={saveProjectName}>
       <CardHeader>
-        <CardTitle>Project Name</CardTitle>
-        <CardDescription>Used to identify your project.</CardDescription>
+        <CardTitle>Chatbot Name</CardTitle>
+        <CardDescription>Used to identify your chatbot.</CardDescription>
       </CardHeader>
       <CardContent>
-        <Input placeholder="My cool SaaS app" name="project-name" />
+        <Input placeholder="Chatsage" name="project-name" />
       </CardContent>
       <CardFooter className="border-t px-6 py-4">
         <SubmitButton />
