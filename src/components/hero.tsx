@@ -33,18 +33,11 @@ export const Hero = () => {
       <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 grid grid-cols-1 items-center gap-y-12 lg:grid-cols-2 lg:px-8 lg:py-40">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
           <div className="mt-24 sm:mt-32 lg:mt-16">
-            <a href="#" className="inline-flex space-x-6">
+            <div className="inline-flex space-x-6">
               <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
-                What&apos;s new
+                Cloud version is coming soon!
               </span>
-              <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
-                <span>Just shipped v1.0</span>
-                <ChevronRightIcon
-                  aria-hidden="true"
-                  className="h-5 w-5 text-gray-400"
-                />
-              </span>
-            </a>
+            </div>
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
             24/7 Customer Service for your website
