@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import { ChevronRightIcon } from "@heroicons/react/20/solid";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { IconGitHub } from "@/app/(chat)/chatbot-embedding/[id]/components/ui/icons";
 import { APP_URL } from "@/lib/consts";
+import { Input } from "./ui/input";
 
 export const Hero = () => {
   return (
@@ -32,32 +32,30 @@ export const Hero = () => {
       </svg>
       <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 grid grid-cols-1 items-center gap-y-12 lg:grid-cols-2 lg:px-8 lg:py-40">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-          <div className="mt-24 sm:mt-32 lg:mt-16">
-            <div className="inline-flex space-x-6">
-              <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
-                Cloud version is coming soon!
-              </span>
+          <div className="mt-24 sm:mt-32 lg:mt-16 space-y-3">
+            <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
+              Cloud version is coming soon!
+            </span>
+            <div className="flex items-center">
+              <Input className="rounded-xl py-1 h-9" placeholder="elon@x.com" />
+              <Button size="sm" variant="secondary" className="ml-2 rounded-xl">
+                Get notifided
+              </Button>
             </div>
           </div>
-          <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          <h1 className="mt-10 text-4xl font-bold tracking-tight text-primary sm:text-6xl">
             24/7 Customer Service for your website
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-lg leading-8 text-secondary-foreground">
             Deploy AI-driven chatbots to handle customer inquiries instantly and
             efficiently, improving response times.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <a
-              href="#"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Get started
-            </a>
-            <a
               target="_blank"
               href="https://github.com/taishikato/chatsage"
               className={cn(
-                buttonVariants({ variant: "secondary" }),
+                buttonVariants({ variant: "outline" }),
                 "mr-8 items-center"
               )}
             >
