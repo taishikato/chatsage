@@ -55,7 +55,6 @@ export const ChatLogSection = () => {
 
         setChatLogs(data);
 
-        console.log("Fetched chat logs:", data);
         setLoading(false);
         // TODO: Update state with fetched data
       } catch (error) {
