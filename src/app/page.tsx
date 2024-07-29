@@ -1,9 +1,9 @@
 import { Header } from "@/components/header";
 import "../lib/consts";
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
 import Script from "next/script";
 import { APP_URL } from "../lib/consts";
+import { Hero } from "@/components/hero";
 
 export default async function Home() {
   let isLoggedIn = false;
@@ -16,10 +16,7 @@ export default async function Home() {
     <>
       <Header isLoggedIn={isLoggedIn} />
       <main className="flex-1">
-        <header>
-          <Link href="/dashboard">dashboard</Link>
-        </header>
-        <h1>SupaChat</h1>
+        <Hero />
         <Script
           async
           defer
