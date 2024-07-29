@@ -2,6 +2,12 @@ import { Toaster } from "sonner";
 import { LayoutNav } from "./_components/layout-nav";
 import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/header";
+import { type Metadata } from "next";
+import { APP_NAME } from "@/lib/consts";
+
+export const metadata: Metadata = {
+  title: `Dashboard | ${APP_NAME}`,
+};
 
 export default async function DashboardLayout({
   children,
