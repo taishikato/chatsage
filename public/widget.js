@@ -93,6 +93,7 @@
   fetch(`${APP_URL}/api/get-chatbot-status/${chatbotId}`, {
     method: "GET",
     mode: "cors",
+    cache: "no-store",
   })
     .then((response) => {
       if (!response.ok) {

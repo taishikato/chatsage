@@ -1,5 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
 
+export const revalidate = 0;
+
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
