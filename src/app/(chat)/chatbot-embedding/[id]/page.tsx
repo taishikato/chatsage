@@ -8,6 +8,8 @@ import { LocalStorageProvider } from "./components/localstorage-provider";
 import { ClientWrapper } from "./components/client-wrapper";
 import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
 
+export const revalidate = 0;
+
 export const metadata = {
   title: "Next.js AI Chatbot",
 };
@@ -26,9 +28,16 @@ export default async function IndexPage({
 
   const { data: chatBotData, error } = await supbabase
     .from("chatbots")
-    .select("name")
+    .select("name, is_public")
     .match({ internal_id: chatBotInternalId })
     .single();
+
+  if (!chatBotData || !chatBotData?.is_public)
+    return (
+      <main className="h-full w-full flex-1 flex items-center justify-center">
+        This chatbot is unavailable.
+      </main>
+    );
 
   return (
     <>
