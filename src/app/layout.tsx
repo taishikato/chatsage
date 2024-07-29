@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: `${APP_NAME} | 24/7 Customer Service for your website`,
   description:
-    "Deploy AI-driven chatbots to handle customer inquiries instantly and efficiently, improving response times.",
+    "Chatsage is an OSS AI Chatbot application. Deploy AI-driven chatbots to handle customer inquiries instantly and efficiently, improving response times.",
 };
 
 export default async function RootLayout({
