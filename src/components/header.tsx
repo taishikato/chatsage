@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { APP_NAME } from "@/lib/consts";
+import { MoveRight } from "lucide-react";
 
 export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
@@ -11,9 +12,16 @@ export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         <h1 className="mr-auto">
           <Link href="/">{APP_NAME}</Link>
         </h1>
-        {!isLoggedIn && (
+        {!isLoggedIn ? (
           <Button asChild>
             <Link href="/login">Login</Link>
+          </Button>
+        ) : (
+          <Button asChild>
+            <Link href="/dashboard">
+              Dashboard
+              <MoveRight className="ml-2 size-4" />
+            </Link>
           </Button>
         )}
       </div>
