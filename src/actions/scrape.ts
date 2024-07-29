@@ -6,13 +6,18 @@ import { cookies } from "next/headers";
 
 import axios from "redaxios";
 
-export const scrape = async (url: string) => {
+export const scrape = async (url: string | null) => {
+  if (!url) {
+    return {
+      success: false,
+      error: "URL is required",
+    };
+  }
+
   const supabase = createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  const cookieStore = cookies();
 
   const { data: project } = await supabase
     .from("chatbots")
@@ -22,6 +27,7 @@ export const scrape = async (url: string) => {
     });
 
   try {
+    const cookieStore = cookies();
     await axios.post(
       `${APP_URL}/api/protected/scrape`,
       {
@@ -34,11 +40,21 @@ export const scrape = async (url: string) => {
         },
       }
     );
+
+    return {
+      success: true,
+    };
   } catch (err) {
     console.error(err);
-  }
 
-  return {
-    success: true,
-  };
+    const errorMessage = (err as any).data
+      ? // redaxiso error type
+        (err as { data: { message: string } }).data.message
+      : (err as Error).message;
+
+    return {
+      success: false,
+      message: errorMessage,
+    };
+  }
 };
