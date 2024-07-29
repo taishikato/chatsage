@@ -1,4 +1,7 @@
+import { cn } from "@/lib/utils";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import { buttonVariants } from "./ui/button";
+import { IconGitHub } from "@/app/(chat)/chatbot-embedding/[id]/components/ui/icons";
 
 export const Hero = () => {
   return (
@@ -36,7 +39,7 @@ export const Hero = () => {
           <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
               <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
-                What's new
+                What&apos;s new
               </span>
               <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
                 <span>Just shipped v1.0</span>
@@ -62,11 +65,17 @@ export const Hero = () => {
             >
               Get started
             </a>
+
             <a
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900"
+              target="_blank"
+              href="https://github.com/taishikato/chatsage"
+              className={cn(
+                buttonVariants({ variant: "secondary" }),
+                "mr-8 items-center"
+              )}
             >
-              Learn more <span aria-hidden="true">→</span>
+              <IconGitHub className="mr-2" />
+              <span>Star on GitHub</span>
             </a>
           </div>
         </div>
