@@ -39,10 +39,19 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // For protected routes
-  if (
-    request.nextUrl.pathname.startsWith("/dashboard") ||
-    request.nextUrl.pathname.startsWith("/api/protected")
-  ) {
+  if (request.nextUrl.pathname.startsWith("/api/protected")) {
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "You need to login",
+        },
+        { status: 403 }
+      );
+    }
+  }
+
+  if (request.nextUrl.pathname.startsWith("/dashboard")) {
     if (!user) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
