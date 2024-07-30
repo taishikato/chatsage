@@ -8,6 +8,9 @@ import { createClient } from "@/lib/supabase/server";
 import { CrawlForm } from "./_components/crawl-form";
 import { SitemapForm } from "./_components/sitemap-form";
 
+// to handle scraping server actions
+export const maxDuration = 30;
+
 export default async function SourcesPage() {
   const supabase = createClient();
 
