@@ -18,14 +18,18 @@ export const deleteSource = async (sourceId: number) => {
     const { error: vectorDeletionError } = await supabase
       .from("vectors")
       .delete()
-      .filter("metadata->chatbot_id", "eq", data?.[0].chatbot_internal_id)
+      .filter(
+        "metadata->>chatbot_internal_id",
+        "eq",
+        data?.[0].chatbot_internal_id
+      )
       .filter("metadata->>url::text", "eq", data?.[0].url);
 
     if (vectorDeletionError) {
       throw new Error(vectorDeletionError.message);
     }
 
-    // then, we delete the project data
+    // then, we delete the data on urls table
     await supabase.from("urls").delete().match({
       id: sourceId,
     });
