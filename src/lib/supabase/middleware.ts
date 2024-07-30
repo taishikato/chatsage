@@ -21,13 +21,14 @@ export async function updateSession(request: NextRequest) {
     const ip = request.ip ?? "127.0.0.1";
     const { success } = await ratelimit.limit(ip);
 
-    if (!success)
+    if (!success) {
       return NextResponse.json(
         {
-          messahe: "too many requests",
+          message: "too many requests",
         },
         { status: 429 }
       );
+    }
   }
 
   /**
