@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/524e170e-3d2a-4968-b3eb-d4b2470e410b" width="200" alt="logo" />
+</p>
 
-## Getting Started
+<h3 align="center">The open-source AI Chatbot for your website</h3>
 
-First, run the development server:
+<p align="center">Give us a star ⭐️</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About the project
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<img
+  width="600px"
+  alt="Demo gif image"
+  src="https://github.com/user-attachments/assets/635d0445-a6ea-4410-b740-9d6bbbba4ec1"
+/>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Built with
 
-## Learn More
+* [Next.js](https://nextjs.org/)
+* [Supabase](https://supabase.com/)
+* [Upstash](https://upstash.com/)
+* [Tailwind CSS](https://tailwindcss.com/)
+* [ScrapingFish](https://scrapingfish.com/)
 
-To learn more about Next.js, take a look at the following resources:
+## Getting started :)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Prerequisites
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+You need to create projects on each of the following platforms for `.env` file:
+* Supabase
+* Upstash
+* Vercel
+* ScrapingFish
 
-## Deploy on Vercel
+### Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repo
+   ```shell
+   git clone https://github.com/taishikato/chatsage.git
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Go to the project folder
+   ```shell
+   cd chatsage
+   ```
+
+3. Install packages with `pnpm`
+   ```shell
+   pnpm i
+   ```
+
+4. Set up your `.env` file
+   * Duplicate `.env.example` to `.env`
+   * Set the values
+
+5. Apply the migration to the remote database (Supabase)
+   ```shell
+   supabase db push
+   ```
+
+6. Enable Google Sign-In on the Supabase Auth settings page.
+
+   [Login with Google | Supabase Docs](https://supabase.com/docs/guides/auth/social-login/auth-google)
