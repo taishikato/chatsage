@@ -1,5 +1,7 @@
 "use server";
 
+import { type AxiosError } from "@/lib/types";
+import { checkUrlNumber } from "@/lib/check-url-number";
 import { APP_URL } from "@/lib/consts";
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
@@ -27,6 +29,8 @@ export const scrape = async (url: string | null) => {
     });
 
   try {
+    await checkUrlNumber(project![0].internal_id);
+
     const cookieStore = cookies();
     await axios.post(
       `${APP_URL}/api/protected/scrape`,
@@ -36,6 +40,7 @@ export const scrape = async (url: string | null) => {
       },
       {
         headers: {
+          // i need this to pass supabase cookies for auth inside the scrape endpoint
           Cookie: cookieStore.toString(),
         },
       }
@@ -48,8 +53,7 @@ export const scrape = async (url: string | null) => {
     console.error(err);
 
     const errorMessage = (err as any).data
-      ? // redaxiso error type
-        (err as { data: { message: string } }).data.message
+      ? (err as AxiosError).data.message
       : (err as Error).message;
 
     return {

@@ -54,7 +54,12 @@ export const CrawlForm = () => {
 
         toast.success("We're adding a new source...hang tight!");
 
-        await scrape(url);
+        const result = await scrape(url);
+        if (!result.success) {
+          toast.error(result.message, { duration: 7000 });
+          return;
+        }
+
         await supabase
           .from("urls")
           .update({

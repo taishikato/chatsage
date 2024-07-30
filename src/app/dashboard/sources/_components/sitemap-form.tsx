@@ -30,6 +30,7 @@ export const SitemapForm = () => {
   const [scrapingStatus, setScrapingStatus] = useState<
     { url: string; status: string }[]
   >([]);
+  const [showTable, setShowTable] = useState(true);
 
   const handleSelectionChange = (newSelectedRows: string[]) => {
     setSelectedRows(newSelectedRows);
@@ -92,7 +93,7 @@ export const SitemapForm = () => {
         />
         <SitemapButton />
       </form>
-      {state.sites.length > 0 && (
+      {showTable && state.sites.length > 0 && (
         <div className="mt-10">
           <div className="mb-4 flex items-center gap-x-4">
             <div className="text-xl font-bold">Found sources</div>
@@ -116,7 +117,14 @@ export const SitemapForm = () => {
                     return cloned;
                   });
 
-                  await scrape(site);
+                  const result = await scrape(site);
+                  if (!result.success) {
+                    toast.error(result.message, { duration: 7000 });
+                    setShowTable(false);
+                    router.refresh();
+
+                    return;
+                  }
 
                   setScrapingStatus((prev) => {
                     const cloned = [...prev];
