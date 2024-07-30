@@ -15,14 +15,14 @@ import { AI } from "../lib/chat/actions";
 import { Loader } from "lucide-react";
 import { useLocalStorage } from "./localstorage-provider";
 
-export interface ChatProps extends React.ComponentProps<"div"> {
+export type ChatProps = {
   initialMessages?: Message[];
   id: string;
   missingKeys: string[];
   chatbotId: string;
-}
+} & React.ComponentProps<"div">;
 
-export function Chat({ id, className, missingKeys, chatbotId }: ChatProps) {
+export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useUIState<typeof AI>();
@@ -81,7 +81,8 @@ export function Chat({ id, className, missingKeys, chatbotId }: ChatProps) {
     };
 
     fetchChat();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatbotId, conversationId]);
 
   return (
     <div
@@ -117,4 +118,4 @@ export function Chat({ id, className, missingKeys, chatbotId }: ChatProps) {
       )}
     </div>
   );
-}
+};
