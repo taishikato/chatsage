@@ -1,5 +1,4 @@
 import { Header } from "@/components/header";
-import "../lib/consts";
 import { createClient } from "@/lib/supabase/server";
 import Script from "next/script";
 import { APP_URL } from "../lib/consts";
