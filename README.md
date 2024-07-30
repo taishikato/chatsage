@@ -23,6 +23,10 @@
 * [Tailwind CSS](https://tailwindcss.com/)
 * [ScrapingFish](https://scrapingfish.com/)
 
+## Contact us (I mean...me)
+
+https://x.com/taishik_
+
 ## Getting started :)
 
 ### Prerequisites
