@@ -13,6 +13,7 @@ import { statusColumns } from "./status-columns";
 import { sourceListColumns } from "./source-list-columns";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useChatbotInternalId } from "@/lib/hooks/use-chatbot-internal-id";
 
 const initialState = {
   sites: [],
@@ -21,8 +22,8 @@ const initialState = {
 export const SitemapForm = () => {
   const supabase = createClient();
   const router = useRouter();
+  const chatbotInternalId = useChatbotInternalId();
 
-  const [projectId, setProjectId] = useState<string | null>(null);
   const [scraping, setScraping] = useState(false);
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [scrapingInitiated, setScrapingInitiated] = useState(false);
@@ -48,34 +49,6 @@ export const SitemapForm = () => {
       })
     );
   }, [selectedRows]);
-
-  useEffect(() => {
-    const fetchProjectId = async () => {
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.getUser();
-
-      if (user) {
-        const { data: projects, error: projectError } = await supabase
-          .from("chatbots")
-          .select("internal_id")
-          .match({ user_auth_id: user.id });
-
-        if (projectError) {
-          console.error("Error fetching project ID:", projectError);
-        } else if (projects.length > 0) {
-          const projectId = projects[0].internal_id;
-          console.log("Fetched project ID:", projectId);
-          setProjectId(projectId || null);
-        } else {
-          console.log("No projects found for the user.");
-        }
-      }
-    };
-
-    fetchProjectId();
-  }, [supabase]);
 
   if (state.success === false) {
     toast.error("URL is required");
@@ -144,7 +117,7 @@ export const SitemapForm = () => {
                     })
                     .match({
                       url: site,
-                      chatbot_internal_id: projectId,
+                      chatbot_internal_id: chatbotInternalId,
                     });
                 }
 
