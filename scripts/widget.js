@@ -1,3 +1,7 @@
+/**
+ * This is a file to use when you edit the response value of the /api/embedding endpoint
+ * since it's much easier to do so here.
+ */
 (function () {
   // Function to create and display the toggle button and iframe
   function createChatbotUI() {
