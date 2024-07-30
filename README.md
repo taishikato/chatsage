@@ -62,3 +62,10 @@ You need to create projects on each of the following platforms for `.env` file:
 6. Enable Google Sign-In on the Supabase Auth settings page.
 
    [Login with Google | Supabase Docs](https://supabase.com/docs/guides/auth/social-login/auth-google)
+
+## Contributors
+
+<a href="https://github.com/taishikato/chatsage/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=taishikato/chatsage" />
+  <img width="65" src="https://github.com/user-attachments/assets/b5ed2394-7964-4dc6-9193-9ebbf63daf5f" />
+</a>
