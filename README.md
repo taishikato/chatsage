@@ -25,7 +25,7 @@
 
 ## Contact us (I mean...me)
 
-https://x.com/taishik_
+[@taishik_](https://x.com/taishik_)
 
 ## Getting started :)
 
