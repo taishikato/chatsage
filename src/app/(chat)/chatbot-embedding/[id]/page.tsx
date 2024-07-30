@@ -7,14 +7,31 @@ import { Providers } from "./components/providers";
 import { LocalStorageProvider } from "./components/localstorage-provider";
 import { ClientWrapper } from "./components/client-wrapper";
 import { createAdminClient } from "@/lib/supabase/supabaseAdminClient";
+import type { Metadata } from "next";
 
 export const revalidate = 0;
 
-export const metadata = {
-  title: "Next.js AI Chatbot",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const supbabase = createAdminClient();
 
-export default async function IndexPage({
+  const chatBotInternalId = params.id;
+
+  const { data: chatBotData, error } = await supbabase
+    .from("chatbots")
+    .select("name, is_public")
+    .match({ internal_id: chatBotInternalId })
+    .single();
+
+  return {
+    title: chatBotData ? chatBotData.name : "No name",
+  };
+}
+
+export default async function ChatbotPage({
   params,
 }: {
   params: { id: string };
