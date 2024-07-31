@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "genType": "npx supabase gen types typescript --project-id 'yxpetxiurawcbgseobbv' --schema public > src/types/supabase.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.39",
