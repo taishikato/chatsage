@@ -41,7 +41,7 @@ export const Hero = () => {
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <Link href="/login" className={buttonVariants()}>
-              Get started
+              Get started for free
             </Link>
             <a
               target="_blank"
