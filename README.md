@@ -6,6 +6,10 @@
 
 <p align="center">Give us a star ⭐️</p>
 
+# Chatsage
+
+[Chatsage](https://www.chatsage.co/) is an open source Chatbase alternative.
+
 ## About the project
 
 
@@ -27,7 +31,11 @@
 
 [@taishik_](https://x.com/taishik_)
 
-## Getting started :)
+## Cloud version
+
+https://www.chatsage.co
+
+## Self hosting
 
 ### Prerequisites
 
