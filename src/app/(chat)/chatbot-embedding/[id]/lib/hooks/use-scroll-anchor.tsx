@@ -9,11 +9,8 @@ export const useScrollAnchor = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const scrollToBottom = useCallback(() => {
-    if (messagesRef.current) {
-      messagesRef.current.scrollIntoView({
-        block: "end",
-        behavior: "smooth",
-      });
+    if (scrollRef.current && visibilityRef.current) {
+      scrollRef.current.scrollTop = visibilityRef.current.offsetTop;
     }
   }, []);
 
