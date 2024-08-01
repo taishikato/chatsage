@@ -8,6 +8,12 @@
 
 # Chatsage
 
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/taishikato/chatsage/main)
+![Vercel](https://vercelbadge.vercel.app/api/taishikato/chatsage)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+[Discord](https://discord.gg/reEuUQNYb3)
+
 [Chatsage](https://www.chatsage.co/) is an open source Chatbase alternative.
 
 ## About the project
