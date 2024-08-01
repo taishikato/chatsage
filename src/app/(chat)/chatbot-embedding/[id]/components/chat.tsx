@@ -41,6 +41,10 @@ export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
   }, [aiState.messages, router]);
 
   useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
     missingKeys.map((key) => {
       toast.error(`Missing ${key} environment variable!`);
     });
