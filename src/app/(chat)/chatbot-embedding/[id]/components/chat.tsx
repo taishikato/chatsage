@@ -50,7 +50,7 @@ export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
     });
   }, [missingKeys]);
 
-  const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
+  const { scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
     useScrollAnchor();
 
   useEffect(() => {
@@ -99,10 +99,7 @@ export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
         </div>
       ) : (
         <>
-          <div
-            className={cn("pb-[200px] pt-4 md:pt-10", className)}
-            ref={messagesRef}
-          >
+          <div className={cn("pb-[200px] pt-4 md:pt-10", className)}>
             {messages.length ? (
               <ChatList messages={messages} />
             ) : (
