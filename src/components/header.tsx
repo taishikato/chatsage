@@ -6,8 +6,24 @@ import { APP_NAME } from "@/lib/consts";
 import { MoveRight, Star } from "lucide-react";
 import { IconGitHub } from "@/app/(chat)/chatbot-embedding/[id]/components/ui/icons";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
 
-export const Header = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+export const Header = () => {
+  const supabase = createClient();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkUserStatus = async () => {
+      const { data } = await supabase.auth.getUser();
+
+      if (data?.user) setIsLoggedIn(true);
+    };
+
+    checkUserStatus();
+  }, []);
+
   return (
     <header className="border-b h-[64px]">
       <div className="max-w-7xl mx-auto flex items-center px-6 py-2 h-full">

@@ -1,6 +1,5 @@
 import { Toaster } from "sonner";
 import { LayoutNav } from "./_components/layout-nav";
-import { createClient } from "@/lib/supabase/server";
 import { Header } from "@/components/header";
 import { type Metadata } from "next";
 import { APP_NAME } from "@/lib/consts";
@@ -14,15 +13,9 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let isLoggedIn = false;
-  const supabase = createClient();
-  const { data } = await supabase.auth.getUser();
-
-  if (data?.user) isLoggedIn = true;
-
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      <Header />
       <main className="flex-1">
         <div className="flex min-h-[calc(100vh-64px)] w-full flex-col bg-muted/40">
           <div className="flex w-full flex-col">
