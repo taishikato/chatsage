@@ -15,6 +15,14 @@ export const useScrollAnchor = () => {
   }, []);
 
   useEffect(() => {
+    if (scrollRef.current && visibilityRef.current) {
+      if (isAtBottom && !isVisible) {
+        scrollRef.current.scrollTop = visibilityRef.current.offsetTop;
+      }
+    }
+  }, [isAtBottom, isVisible]);
+
+  useEffect(() => {
     const { current } = scrollRef;
 
     if (current) {
@@ -51,7 +59,7 @@ export const useScrollAnchor = () => {
           });
         },
         {
-          rootMargin: "0px 0px -150px 0px",
+          rootMargin: "0px 0px -70px 0px",
         }
       );
 
