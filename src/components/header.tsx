@@ -25,7 +25,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="border-b h-[64px]">
+    <header className="border-b h-[64px] sticky top-0 inset-x-0 z-10 bg-background">
       <div className="max-w-7xl mx-auto flex items-center px-6 py-2 h-full">
         <h1 className="mr-auto">
           <Link href="/" className="flex items-center">
