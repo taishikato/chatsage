@@ -58,7 +58,7 @@ export const HowItWorks = () => {
           href="/login"
           className={cn(
             buttonVariants({ size: "lg" }),
-            "hover:scale-105 transition-transform"
+            "hover:scale-105 transition-all"
           )}
         >
           Get started for free
