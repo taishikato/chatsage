@@ -75,8 +75,6 @@ export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
         });
 
         setMessages(messagesNode);
-
-        scrollToBottom();
       } catch (error) {
         console.error("Error fetching chat:", error);
       } finally {
@@ -99,7 +97,7 @@ export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
         </div>
       ) : (
         <>
-          <div className={cn("pb-[200px] pt-4 md:pt-10", className)}>
+          <div className={cn("pb-[130px] pt-4 md:pt-10", className)}>
             {messages.length ? (
               <ChatList messages={messages} />
             ) : (
