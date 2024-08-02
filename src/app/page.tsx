@@ -4,6 +4,7 @@ import Script from "next/script";
 import { APP_URL } from "../lib/consts";
 import { Hero } from "@/components/hero";
 import { Footer } from "@/components/footer";
+import { HowItWorks } from "@/components/how-it-works";
 
 export default async function Home() {
   let isLoggedIn = false;
@@ -17,6 +18,7 @@ export default async function Home() {
       <Header isLoggedIn={isLoggedIn} />
       <main className="flex-1">
         <Hero />
+        <HowItWorks />
         <Script
           async
           defer
