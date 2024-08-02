@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { IconGitHub } from "@/app/(chat)/chatbot-embedding/[id]/components/ui/icons";
-import { APP_URL } from "@/lib/consts";
+import { APP_NAME, APP_URL } from "@/lib/consts";
 import Link from "next/link";
 
 export const Hero = () => {
@@ -35,9 +35,14 @@ export const Hero = () => {
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-primary sm:text-6xl">
             24/7 Customer Service for your website
           </h1>
-          <p className="mt-6 text-lg leading-8 text-secondary-foreground">
-            Deploy AI-driven chatbots to handle customer inquiries instantly and
-            efficiently, improving response times.
+          <p className="mt-6 text-lg leading-8 text-secondary-foreground/70">
+            <span className="block">
+              {APP_NAME} is an open source AI chatbot for your website.
+            </span>
+            <span>
+              Deploy AI-driven chatbots to handle customer inquiries instantly
+              and efficiently, improving response times.
+            </span>
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <Link href="/login" className={buttonVariants()}>
