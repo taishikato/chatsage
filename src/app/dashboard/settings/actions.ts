@@ -67,3 +67,48 @@ export const updateChatbotVisibility = async (chatbotVisibility: string) => {
     success: true,
   };
 };
+
+export const updateAISettings = async (prevState: any, formData: FormData) => {
+  const temperature = formData.get("temperature") as number | null;
+  console.log({ temperature });
+
+  if (!temperature) {
+    return {
+      success: false,
+      message: "temperature can't be empty",
+    };
+  }
+
+  const numberedTemperature = Number(temperature);
+
+  const supabase = createClient();
+  const {
+    data: { user },
+    error: userFetchError,
+  } = await supabase.auth.getUser();
+
+  if (!user || userFetchError) {
+    return {
+      success: false,
+      needLogin: true,
+      message: "Failed to fetch user data. Please login again.",
+    };
+  }
+
+  const { error } = await supabase
+    .from("chatbots")
+    .update({ temperature: numberedTemperature })
+    .match({ user_auth_id: user.id });
+
+  if (error) {
+    return {
+      success: false,
+      needLogin: false,
+      message: error.message,
+    };
+  }
+
+  return {
+    success: true,
+  };
+};

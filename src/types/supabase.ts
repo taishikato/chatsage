@@ -54,6 +54,7 @@ export type Database = {
           internal_id: string
           is_public: boolean
           name: string | null
+          temperature: number | null
           user_auth_id: string
         }
         Insert: {
@@ -62,6 +63,7 @@ export type Database = {
           internal_id?: string
           is_public?: boolean
           name?: string | null
+          temperature?: number | null
           user_auth_id: string
         }
         Update: {
@@ -70,6 +72,7 @@ export type Database = {
           internal_id?: string
           is_public?: boolean
           name?: string | null
+          temperature?: number | null
           user_auth_id?: string
         }
         Relationships: [
@@ -84,21 +87,21 @@ export type Database = {
       }
       urls: {
         Row: {
-          chatbot_internal_id: string | null
+          chatbot_internal_id: string
           created_at: string
           id: number
           status: string | null
           url: string
         }
         Insert: {
-          chatbot_internal_id?: string | null
+          chatbot_internal_id: string
           created_at?: string
           id?: number
           status?: string | null
           url: string
         }
         Update: {
-          chatbot_internal_id?: string | null
+          chatbot_internal_id?: string
           created_at?: string
           id?: number
           status?: string | null
