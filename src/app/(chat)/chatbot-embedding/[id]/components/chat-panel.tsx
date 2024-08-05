@@ -16,6 +16,7 @@ export type ChatPanelProps = {
   isAtBottom: boolean;
   scrollToBottom: () => void;
   chatbotId: string;
+  temperature: number;
 };
 
 export const ChatPanel = ({
@@ -26,6 +27,7 @@ export const ChatPanel = ({
   isAtBottom,
   scrollToBottom,
   chatbotId,
+  temperature,
 }: ChatPanelProps) => {
   // const [aiState] = useAIState();
   // const [messages, setMessages] = useUIState<typeof AI>();
@@ -99,7 +101,11 @@ export const ChatPanel = ({
         </div> */}
 
         <div className="border-t bg-background shadow-lg">
-          <PromptForm input={input} setInput={setInput} />
+          <PromptForm
+            input={input}
+            setInput={setInput}
+            temperature={temperature}
+          />
           <FooterText className="h-10 flex items-center justify-center text-xs bg-muted/70" />
         </div>
       </div>

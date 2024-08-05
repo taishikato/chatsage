@@ -45,7 +45,7 @@ export default async function ChatbotPage({
 
   const { data: chatBotData, error } = await supbabase
     .from("chatbots")
-    .select("name, is_public")
+    .select("name, is_public, temperature")
     .match({ internal_id: chatBotInternalId })
     .single();
 
@@ -73,6 +73,7 @@ export default async function ChatbotPage({
                   id={id}
                   missingKeys={missingKeys}
                   chatbotId={chatBotInternalId}
+                  temperature={chatBotData.temperature ?? 0}
                 />
               </AI>
             </div>
