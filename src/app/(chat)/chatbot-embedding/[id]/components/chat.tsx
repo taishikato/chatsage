@@ -20,9 +20,16 @@ export type ChatProps = {
   id: string;
   missingKeys: string[];
   chatbotId: string;
+  temperature: number;
 } & React.ComponentProps<"div">;
 
-export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
+export const Chat = ({
+  id,
+  className,
+  missingKeys,
+  chatbotId,
+  temperature,
+}: ChatProps) => {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useUIState<typeof AI>();
@@ -112,6 +119,7 @@ export const Chat = ({ id, className, missingKeys, chatbotId }: ChatProps) => {
             isAtBottom={isAtBottom}
             scrollToBottom={scrollToBottom}
             chatbotId={chatbotId}
+            temperature={temperature}
           />
         </>
       )}

@@ -20,9 +20,11 @@ import { useParams } from "next/navigation";
 export function PromptForm({
   input,
   setInput,
+  temperature,
 }: {
   input: string;
   setInput: (value: string) => void;
+  temperature: number;
 }) {
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -65,7 +67,8 @@ export function PromptForm({
         const responseMessage = await submitUserMessage(
           value,
           chatbotId,
-          conversationId
+          conversationId,
+          temperature
         );
 
         setMessages((currentMessages) => [...currentMessages, responseMessage]);

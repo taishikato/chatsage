@@ -50,7 +50,8 @@ const getChat = async (chatbotId: string, conversationId: string) => {
 const submitUserMessage = async (
   content: string,
   chatbotId: string,
-  conversationId: string
+  conversationId: string,
+  temperature: number
 ) => {
   "use server";
 
@@ -88,6 +89,7 @@ const submitUserMessage = async (
   const result = await streamUI({
     // @ts-ignore
     model: openai("gpt-4o-mini"),
+    temperature,
     initial: <SpinnerMessage />,
     system: `\
     You are an advanced AI chatbot designed to assist users by answering their questions using the provided context. Your goal is to understand the user's query, refer to the relevant context, and provide a clear and accurate response.
