@@ -4,30 +4,31 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { updateAISettings } from "../actions";
 import { AiSettingsButton } from "./ai-settings-button";
-import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { useState } from "react";
 
-const initialState = {
-  success: false,
-  message: undefined,
-};
-
 export const AiSettings = ({ temperature }: { temperature: number }) => {
-  const [state, formAction] = useFormState(updateAISettings, initialState);
-
   const [newTemperature, setNewtemperature] = useState(temperature);
 
-  if (state.success) {
-    toast.success("The temperature valus is successfully updated.");
-  } else if (state.success === false && state.message) {
-    toast.error(state.message);
-  }
-
   return (
-    <form action={formAction}>
+    <form
+      action={async (formData) => {
+        const result = await updateAISettings(formData);
+
+        if (result.success) {
+          toast.success("The temperature valus is successfully updated.");
+        } else if (result.success === false && result.message) {
+          toast.error(result.message);
+        }
+      }}
+    >
       <CardContent>
-        {newTemperature}
+        <div className="flex gap-x-5 mb-5 items-center">
+          <h4 className="text-base text-secondary-foreground/80">
+            Temperature
+          </h4>
+          <div className="text-sm">{newTemperature}</div>
+        </div>
         <Slider
           name="temperature"
           defaultValue={[newTemperature]}

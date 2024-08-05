@@ -69,7 +69,7 @@ export const updateChatbotVisibility = async (chatbotVisibility: string) => {
   };
 };
 
-export const updateAISettings = async (prevState: any, formData: FormData) => {
+export const updateAISettings = async (formData: FormData) => {
   const temperature = formData.get("temperature") as number | null;
 
   if (!temperature) {
