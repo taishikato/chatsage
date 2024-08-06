@@ -24,13 +24,13 @@ export const UserMessage = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export function BotMessage({
+export const BotMessage = ({
   content,
   className,
 }: {
   content: string | StreamableValue<string>;
   className?: string;
-}) {
+}) => {
   const text = useStreamableText(content);
 
   return (
@@ -87,7 +87,7 @@ export function BotMessage({
       </div>
     </div>
   );
-}
+};
 
 export function SpinnerMessage() {
   return (

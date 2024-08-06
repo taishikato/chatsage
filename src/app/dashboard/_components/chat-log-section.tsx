@@ -1,29 +1,42 @@
 "use client";
 
-import type { Database } from "@/types/supabase";
+import type { Database, Tables } from "@/types/supabase";
+import { Fragment } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { SkeletonLoading } from "./skeleton-loading";
 import { useChatbotInternalId } from "@/lib/hooks/use-chatbot-internal-id";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
+import { BotMessage } from "@/app/(chat)/chatbot-embedding/[id]/components/stocks";
+import { UserMessage } from "@/app/(chat)/chatbot-embedding/[id]/components/stocks/message";
 
-type GetChatLogsFunctionType =
-  Database["public"]["Functions"]["get_chat_logs_by_chatbot"];
+type GetChatLogsFunctionReturnType = Omit<
+  Database["public"]["Functions"]["get_chat_logs_by_chatbot"]["Returns"],
+  "messages"
+> & { messages: Tables<"chat_logs">[] };
+[];
 
 export const ChatLogSection = () => {
   const supabase = createClient();
   const chatbotInternalId = useChatbotInternalId();
-
   const [conversations, setConversations] = useState<
-    GetChatLogsFunctionType["Returns"]
+    GetChatLogsFunctionReturnType | []
   >([]);
 
   const [selectedConversationId, setSelectedConversationId] = useState<
-    GetChatLogsFunctionType["Returns"][number]["conversation_id"] | null
+    GetChatLogsFunctionReturnType[number]["conversation_id"] | null
   >(null);
   const [selectedConversationMessages, setSelectedConversationMessages] =
-    useState<GetChatLogsFunctionType["Returns"][number]["messages"]>(null);
+    useState<
+      {
+        id: string;
+        internal_id: string;
+        message: string;
+        role: string;
+        created_at: string;
+      }[]
+    >([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -39,7 +52,7 @@ export const ChatLogSection = () => {
         return null;
       }
 
-      setConversations(data);
+      setConversations(data as GetChatLogsFunctionReturnType);
       setSelectedConversationId(
         data.length > 0 ? data[0].conversation_id : null
       );
@@ -55,7 +68,15 @@ export const ChatLogSection = () => {
       (conversation) => conversation.conversation_id === selectedConversationId
     );
     setSelectedConversationMessages(
-      selectedConversation ? selectedConversation.messages : null
+      selectedConversation
+        ? (selectedConversation.messages as {
+            id: string;
+            internal_id: string;
+            message: string;
+            role: string;
+            created_at: string;
+          }[])
+        : []
     );
   }, [selectedConversationId]);
 
@@ -68,25 +89,29 @@ export const ChatLogSection = () => {
 
   return (
     <>
-      <div className="flex gap-x-5">
-        <div className="w-full max-w-sm border rounded-lg divide-y overflow-auto max-h-96">
+      <div className="flex flex-col md:flex-row gap-y-6 md:gap-y-0 md:gap-x-5 w-full">
+        <div className="w-full md:max-w-sm border rounded-lg divide-y overflow-auto max-h-[46rem] shrink-0">
           {conversations.map((conversation) => {
+            const messages = conversation.messages as {
+              id: string;
+              internal_id: string;
+              message: string;
+              role: string;
+              created_at: string;
+            }[];
+
             const userMessage =
-              conversation.messages[conversation.messages.length - 2]
-                ?.message || "No second latest message";
+              messages[messages.length - 2]?.message ||
+              "No second latest message";
 
             const messageCreated = formatDistanceToNow(
-              new Date(
-                conversation.messages[
-                  conversation.messages.length - 2
-                ].created_at
-              ),
+              new Date(messages[messages.length - 2].created_at),
               { addSuffix: true }
             );
 
             const lastMessage =
-              conversation.messages[conversation.messages.length - 1]
-                ?.message || "No second latest message";
+              messages[messages.length - 1]?.message ||
+              "No second latest message";
 
             return (
               <div
@@ -95,7 +120,7 @@ export const ChatLogSection = () => {
                   setSelectedConversationId(conversation.conversation_id)
                 }
                 className={cn(
-                  "p-4 space-y-2 text-sm hover:cursor-pointer hover:bg-secondary",
+                  "w-full min-w-full p-4 space-y-2 text-sm hover:cursor-pointer hover:bg-secondary",
                   conversation.conversation_id === selectedConversationId
                     ? "bg-secondary"
                     : null
@@ -105,10 +130,7 @@ export const ChatLogSection = () => {
                   <div className="truncate">{userMessage}</div>
                   <time
                     className="ml-3 shrink-0"
-                    datatime={
-                      conversation.messages[conversation.messages.length - 2]
-                        .created_at
-                    }
+                    dateTime={messages[messages.length - 1].created_at}
                   >
                     {messageCreated}
                   </time>
@@ -121,8 +143,18 @@ export const ChatLogSection = () => {
           })}
         </div>
 
-        <div className="w-full border rounded-lg">
-          {JSON.stringify(selectedConversationMessages)}
+        <div className="w-full border rounded-lg h-[46rem] overflow-auto p-4">
+          {selectedConversationMessages?.map((messageData) => {
+            return (
+              <Fragment key={messageData.id}>
+                {messageData.role === "user" ? (
+                  <UserMessage>{messageData.message}</UserMessage>
+                ) : (
+                  <BotMessage content={messageData.message} />
+                )}
+              </Fragment>
+            );
+          })}
         </div>
       </div>
     </>
