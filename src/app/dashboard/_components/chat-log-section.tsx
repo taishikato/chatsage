@@ -1,107 +1,129 @@
 "use client";
 
-import type { Tables } from "@/types/supabase";
+import type { Database } from "@/types/supabase";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { SkeletonLoading } from "./skeleton-loading";
+import { useChatbotInternalId } from "@/lib/hooks/use-chatbot-internal-id";
+import { formatDistanceToNow } from "date-fns";
+import { cn } from "@/lib/utils";
+
+type GetChatLogsFunctionType =
+  Database["public"]["Functions"]["get_chat_logs_by_chatbot"];
 
 export const ChatLogSection = () => {
   const supabase = createClient();
+  const chatbotInternalId = useChatbotInternalId();
 
-  const [chatLogs, setChatLogs] = useState<Tables<"chat_logs">[]>([]);
+  const [conversations, setConversations] = useState<
+    GetChatLogsFunctionType["Returns"]
+  >([]);
+
+  const [selectedConversationId, setSelectedConversationId] = useState<
+    GetChatLogsFunctionType["Returns"][number]["conversation_id"] | null
+  >(null);
+  const [selectedConversationMessages, setSelectedConversationMessages] =
+    useState<GetChatLogsFunctionType["Returns"][number]["messages"]>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchChatLogs = async () => {
+    const fetchChatLogs = async (chatbotInternalId: string) => {
       setLoading(true);
 
-      try {
-        const {
-          data: { user },
-          error: userError,
-        } = await supabase.auth.getUser();
+      const { data, error } = await supabase.rpc("get_chat_logs_by_chatbot", {
+        chatbot_id: chatbotInternalId,
+      });
 
-        if (userError) {
-          console.error("Error fetching user:", userError);
-          setLoading(false);
-          return;
-        }
-
-        // Get the project ID for the logged-in user
-        const { data: projectData, error: projectError } = await supabase
-          .from("chatbots")
-          .select("internal_id")
-          .eq("user_auth_id", user!.id)
-          .single();
-
-        if (projectError) {
-          console.error("Error fetching project:", projectError);
-          setLoading(false);
-          return;
-        }
-
-        // Fetch chat logs for the user's project
-        const { data, error } = await supabase
-          .from("chat_logs")
-          .select("*")
-          .match({ chatbot_internal_id: projectData.internal_id })
-          .order("created_at", { ascending: false });
-
-        if (error) {
-          console.error("Error fetching chat logs:", error);
-          setLoading(false);
-          return;
-        }
-
-        setChatLogs(data);
-
-        setLoading(false);
-        // TODO: Update state with fetched data
-      } catch (error) {
-        console.error("Error in fetchChatLogs:", error);
-        setLoading(false);
+      if (error) {
+        console.error("Error fetching chat logs:", error);
+        return null;
       }
+
+      setConversations(data);
+      setSelectedConversationId(
+        data.length > 0 ? data[0].conversation_id : null
+      );
+
+      setLoading(false);
     };
 
-    fetchChatLogs();
-  }, []);
+    if (chatbotInternalId) fetchChatLogs(chatbotInternalId);
+  }, [chatbotInternalId]);
+
+  useEffect(() => {
+    const selectedConversation = conversations.find(
+      (conversation) => conversation.conversation_id === selectedConversationId
+    );
+    setSelectedConversationMessages(
+      selectedConversation ? selectedConversation.messages : null
+    );
+  }, [selectedConversationId]);
 
   if (loading) return <SkeletonLoading />;
 
-  if (chatLogs.length === 0)
+  if (conversations.length === 0)
     return (
       <div className="flex items-center justify-center h-20">No chats yet</div>
     );
 
   return (
     <>
-      <div className="text-sm">
-        {chatLogs.map((log) => {
-          return (
-            <div
-              key={log.internal_id}
-              className="space-y-3 p-4 rounded-xl cursor-pointer hover:bg-secondary"
-            >
-              {log.role === "user" ? (
-                <div className="text-secondary-foreground/50 flex items-center justify-between">
-                  <span>{log.message}</span>
-                  <time>
-                    {new Date(log.created_at).toLocaleString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                      day: "numeric",
-                      month: "short",
-                      year: "numeric",
-                    })}
+      <div className="flex gap-x-5">
+        <div className="w-full max-w-sm border rounded-lg divide-y overflow-auto max-h-96">
+          {conversations.map((conversation) => {
+            const userMessage =
+              conversation.messages[conversation.messages.length - 2]
+                ?.message || "No second latest message";
+
+            const messageCreated = formatDistanceToNow(
+              new Date(
+                conversation.messages[
+                  conversation.messages.length - 2
+                ].created_at
+              ),
+              { addSuffix: true }
+            );
+
+            const lastMessage =
+              conversation.messages[conversation.messages.length - 1]
+                ?.message || "No second latest message";
+
+            return (
+              <div
+                key={conversation.conversation_id}
+                onClick={() =>
+                  setSelectedConversationId(conversation.conversation_id)
+                }
+                className={cn(
+                  "p-4 space-y-2 text-sm hover:cursor-pointer hover:bg-secondary",
+                  conversation.conversation_id === selectedConversationId
+                    ? "bg-secondary"
+                    : null
+                )}
+              >
+                <div className="flex text-muted-foreground justify-between">
+                  <div className="truncate">{userMessage}</div>
+                  <time
+                    className="ml-3 shrink-0"
+                    datatime={
+                      conversation.messages[conversation.messages.length - 2]
+                        .created_at
+                    }
+                  >
+                    {messageCreated}
                   </time>
                 </div>
-              ) : (
-                <div>{log.message}</div>
-              )}
-            </div>
-          );
-        })}
+                <div className="text-secondary-foreground/90 line-clamp-2">
+                  Bot: {lastMessage}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="w-full border rounded-lg">
+          {JSON.stringify(selectedConversationMessages)}
+        </div>
       </div>
     </>
   );
