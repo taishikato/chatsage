@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
   type Source,
@@ -25,11 +25,12 @@ export default async function SourcesPage() {
     });
 
   return (
-    <div>
-      <Card className="p-6">
+    <div className="w-full">
+      <Card className="">
+        <CardHeader>
+          <CardTitle>Sources</CardTitle>
+        </CardHeader>
         <CardContent>
-          <h1 className="text-2xl font-bold mb-6">Sources</h1>
-
           <section>
             <h2 className="text-lg font-semibold mb-4">Crawl</h2>
             <CrawlForm />

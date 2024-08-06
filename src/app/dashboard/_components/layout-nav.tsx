@@ -23,10 +23,7 @@ export const LayoutNav = () => {
   const path = usePathname();
 
   return (
-    <nav
-      className="grid gap-4 text-sm text-muted-foreground w-full md:w-[180px] lg:w-[250px] shrink-0"
-      x-chunk="dashboard-04-chunk-0"
-    >
+    <nav className="gap-4 text-sm text-muted-foreground w-full md:w-[180px] lg:w-[250px] flex shrink-0 flex-row md:flex-col">
       {links.map((link) => {
         return (
           <Link

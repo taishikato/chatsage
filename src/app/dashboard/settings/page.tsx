@@ -32,15 +32,15 @@ export default async function SettingsPage() {
   if (!data || error) redirect("/login");
 
   return (
-    <div className="grid gap-6">
-      <Card x-chunk="dashboard-04-chunk-1">
+    <div className="w-full space-y-6">
+      <Card>
         <CardHeader>
           <CardTitle>Chatbot name</CardTitle>
         </CardHeader>
         <ProjectUpdateForm projectName={data.name ?? ""} />
       </Card>
 
-      <Card x-chunk="dashboard-04-chunk-1">
+      <Card>
         <CardHeader>
           <CardTitle>Chatbot visibility</CardTitle>
         </CardHeader>
