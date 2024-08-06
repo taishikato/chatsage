@@ -24,7 +24,7 @@ export const LayoutNav = () => {
 
   return (
     <nav
-      className="grid gap-4 text-sm text-muted-foreground"
+      className="grid gap-4 text-sm text-muted-foreground w-full md:w-[180px] lg:w-[250px] shrink-0"
       x-chunk="dashboard-04-chunk-0"
     >
       {links.map((link) => {
