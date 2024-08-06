@@ -164,6 +164,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_chat_logs_by_chatbot: {
+        Args: {
+          chatbot_id: string
+        }
+        Returns: {
+          conversation_id: string
+          messages: Json
+        }[]
+      }
       match_vectors:
         | {
             Args: {
