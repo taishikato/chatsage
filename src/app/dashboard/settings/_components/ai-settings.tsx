@@ -16,7 +16,7 @@ export const AiSettings = ({ temperature }: { temperature: number }) => {
         const result = await updateAISettings(formData);
 
         if (result.success) {
-          toast.success("The temperature valus is successfully updated.");
+          toast.success("The temperature value is successfully updated.");
         } else if (result.success === false && result.message) {
           toast.error(result.message);
         }
