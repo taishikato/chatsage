@@ -8,6 +8,9 @@ import { createClient } from "@/lib/supabase/server";
 import { CrawlForm } from "./_components/crawl-form";
 import { SitemapForm } from "./_components/sitemap-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 // to handle scraping server actions
 export const maxDuration = 30;
@@ -27,7 +30,7 @@ export default async function SourcesPage() {
 
   return (
     <div className="w-full">
-      <Tabs defaultValue="account" className="w-full">
+      <Tabs defaultValue="qanda" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="website" className="flex-1">
             Website
@@ -43,7 +46,7 @@ export default async function SourcesPage() {
             </CardHeader>
             <CardContent>
               <section>
-                <h2 className="text-lg font-semibold mb-4">Crawl</h2>
+                <h4 className="text-lg font-semibold mb-4">Crawl</h4>
                 <CrawlForm />
               </section>
 
@@ -52,7 +55,7 @@ export default async function SourcesPage() {
               </div>
 
               <section>
-                <h2 className="text-lg font-semibold mb-4">Sitemap</h2>
+                <h4 className="text-lg font-semibold mb-4">Sitemap</h4>
                 <SitemapForm />
               </section>
 
@@ -73,26 +76,28 @@ export default async function SourcesPage() {
             </CardHeader>
             <CardContent>
               <section>
-                <h2 className="text-lg font-semibold mb-4">Crawl</h2>
-                <CrawlForm />
+                <h4 className="text-lg font-semibold mb-4"></h4>
+
+                <div className="grid w-full gap-1.5 mb-3">
+                  <Label htmlFor="question">Question</Label>
+                  <Textarea
+                    placeholder="Type your message here."
+                    id="question"
+                    rows={3}
+                  />
+                </div>
+
+                <div className="grid w-full gap-1.5">
+                  <Label htmlFor="answer">Answer</Label>
+                  <Textarea
+                    placeholder="Type your message here."
+                    id="answer"
+                    rows={8}
+                  />
+                </div>
+
+                <Button className="mt-5">Save</Button>
               </section>
-
-              <div className="w-full my-8 text-center text-muted-foreground">
-                OR
-              </div>
-
-              <section>
-                <h2 className="text-lg font-semibold mb-4">Sitemap</h2>
-                <SitemapForm />
-              </section>
-
-              <Separator className="my-12" />
-
-              <FetchedSourcesSection
-                sources={
-                  projectAndUrls ? (projectAndUrls[0].urls as Source[]) : null
-                }
-              />
             </CardContent>
           </Card>
         </TabsContent>
