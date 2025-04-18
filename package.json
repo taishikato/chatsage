@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "genType": "npx supabase gen types typescript --project-id 'yxpetxiurawcbgseobbv' --schema public > src/types/supabase.ts"
+    "with-env": "dotenv -e .env -c -- ",
+    "_genType": "npx supabase gen types typescript --project-id $SUPABASE_PROJECT_ID --schema public > src/types/supabase.ts",
+    "genType": "npm run _with-env pnpm _genType"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.39",
@@ -37,6 +39,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "dotenv-cli": "^8.0.0",
     "html-entities": "^2.5.2",
     "langchain": "^0.2.10",
     "lucide-react": "^0.408.0",
